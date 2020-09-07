@@ -7,3 +7,4 @@
 
 ## 参考
 - [Clean Architecture in Go](https://medium.com/@hatajoe/clean-architecture-in-go-4030f11ec1b1)
+- [Practical Persistence in Go: Organising Database Access](https://www.alexedwards.net/blog/organising-database-access)
