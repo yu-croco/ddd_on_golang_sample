@@ -8,3 +8,4 @@
 ## 参考
 - [Clean Architecture in Go](https://medium.com/@hatajoe/clean-architecture-in-go-4030f11ec1b1)
 - [Practical Persistence in Go: Organising Database Access](https://www.alexedwards.net/blog/organising-database-access)
+- [【必須科目 DI】DIの仕組みをGoで実装して理解する](https://qiita.com/yoshinori_hisakawa/items/a944115eb77ed9247794)
