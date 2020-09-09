@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  api:
+    build: .
+    tty: true
+    volumes:
+      - .:/ddd_on_golang
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ddd_on_golang
+      POSTGRES_DB: ddd_on_golang
+    ports:
+      - 5432:5432
