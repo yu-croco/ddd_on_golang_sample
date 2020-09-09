@@ -4,6 +4,16 @@
 - [yu-croco/ddd_on_scala](https://github.com/yu-croco/ddd_on_scala) のGolangバージョン
 - Golang（Gin）を使い、なんちゃってモンハンの世界をDomain-Driven Designで実装している
 
+## 技術スタック
+- Golang: v1.15
+- Gin: v1.6.3
+- Gorm(ORM): v1.9.16
+- Docker, docker-compose
+
+## セットアップ
+- このレポジトリをgit cloneする
+- `docker-compose up`でAPIサーバーとDBが起動する
+
 ## 実装してみての考察
 WIP
 
