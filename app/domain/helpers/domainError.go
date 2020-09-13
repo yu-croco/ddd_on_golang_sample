@@ -3,7 +3,7 @@ package helpers
 import "errors"
 
 type DomainError struct {
-	errors []error
+	errors []error `json:errors`
 }
 
 func NewDomainError(message string) DomainError {

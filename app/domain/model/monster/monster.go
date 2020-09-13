@@ -32,7 +32,7 @@ func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, h
 	if monster.Life >= 0 {
 		monster.Life = Life(givenDamage)
 	} else {
-		err = helpers.NewDomainError("すでに倒しています")
+		err = helpers.NewDomainError("このモンスターはすでに倒しています")
 	}
 
 	return monster, err
@@ -40,7 +40,7 @@ func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, h
 
 func (monster *Monster) TakenMaterial() (*MonsterMaterial, helpers.DomainError) {
 	if monster.Life != 0 {
-		return &MonsterMaterial{}, helpers.NewDomainError("まだ生きてるよ")
+		return &MonsterMaterial{}, helpers.NewDomainError("このモンスターはまだ生きてるので剥ぎ取れません")
 	} else {
 		return &monster.Materials[0], helpers.DomainError{}
 	}
