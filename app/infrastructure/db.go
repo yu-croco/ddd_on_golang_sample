@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
+	"yu-croco/ddd_on_golang/app/infrastructure/seeds"
 )
 
 var (
@@ -22,7 +23,7 @@ func Init() {
 	autoMigrate()
 	execSeeds()
 
-	fmt.Println("DB setup done!")
+	fmt.Println("[INFO]DB setup done!")
 }
 
 func GetDB() *gorm.DB {
@@ -43,40 +44,7 @@ func autoMigrate() {
 }
 
 func execSeeds() {
-	db.Create(&dao.Monster{
-		ID:           1,
-		Name:         "ランポス",
-		Life:         150,
-		DefencePower: 100,
-		OffensePower: 110,
-		Materials: []dao.MonsterMaterial{
-			{
-				ID:     1,
-				Name:   "ランポスの革",
-				Rarity: 1,
-			},
-			{
-				ID:     2,
-				Name:   "ランポスの爪",
-				Rarity: 1,
-			},
-		},
-	})
-
+	db.Create(&seeds.MonsterSeed)
 	// ToDo: 中間テーブルにデータが入らないのを修正
-	db.Create(&dao.Hunter{
-		ID:           1,
-		Name:         "新米ハンター",
-		Life:         150,
-		DefencePower: 100,
-		OffensePower: 110,
-		HuntedMaterials: []dao.HuntedMonsterMaterial{{
-			ID:                1,
-			MonsterMaterialID: 1,
-		},
-			{
-				ID:                2,
-				MonsterMaterialID: 2,
-			}},
-	})
+	db.Create(&seeds.HunterSeed)
 }
