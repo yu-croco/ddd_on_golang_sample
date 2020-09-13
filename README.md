@@ -6,9 +6,11 @@
 
 ## 技術スタック
 - Golang: v1.15
+- Go modules
 - Gin: v1.6.3
-- Gorm(ORM): v1.9.16
-- Docker, docker-compose
+- Gorm: v1.9.16
+- Docker: 19.03.12
+- docker-compose: 1.26.2
 
 ## セットアップ
 - このレポジトリをgit cloneする
