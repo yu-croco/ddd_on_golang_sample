@@ -1,7 +1,7 @@
 package monster
 
 import (
-	"errors"
+	"yu-croco/ddd_on_golang/app/domain/helpers"
 	"yu-croco/ddd_on_golang/app/domain/model/hunter"
 )
 
@@ -22,25 +22,26 @@ type DefencePower int
 type OffensePower int
 type AttackDamage int
 
-func (monster *Monster) Attack(hunter hunter.Hunter, damage AttackDamage) (*hunter.Hunter, error) {
+func (monster *Monster) Attack(hunter hunter.Hunter, damage AttackDamage) (*hunter.Hunter, helpers.DomainError) {
 	return hunter.AttackedBy(damage)
 }
 
-func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, error) {
-	var err error
+func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, helpers.DomainError) {
+	var err helpers.DomainError
 
 	if monster.Life >= 0 {
 		monster.Life = Life(givenDamage)
 	} else {
-		err = errors.New("すでに倒しています")
+		err = helpers.NewDomainError("すでに倒しています")
 	}
 
 	return monster, err
 }
 
-func (monster *Monster) TakenMaterial() (*MonsterMaterial, error) {
+func (monster *Monster) TakenMaterial() (*MonsterMaterial, helpers.DomainError) {
 	if monster.Life != 0 {
-		return &MonsterMaterial{}, errors.New("まだ生きてるよ")
+		return &MonsterMaterial{}, helpers.NewDomainError("まだ生きてるよ")
+	} else {
+		return &monster.Materials[0], helpers.DomainError{}
 	}
-	return &monster.Materials[0], nil
 }
