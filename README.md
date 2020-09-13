@@ -19,7 +19,17 @@ WIP
 
 （Scalaなどとは別パラダイムの言語である）Golangを用いてDDDをどこまでできたのかをまとめる予定
 
+### 意味のあると感じたこと
+- 階層/パッケージ分けにより責任の所在をある程度まとめられる
+  - DDDというよりはオニオンアーキテクチャなどの観点かもしれないが..
+
+### 辛み
+- Genericを使った共通処理が作れないため記述量が増える
+    - implicit classが恋しい
+    - そもそも言語パラダイム的に兼ね備えていないので文句を言う方が不適切な気もするが...
+
 ## 参考
 - [Clean Architecture in Go](https://medium.com/@hatajoe/clean-architecture-in-go-4030f11ec1b1)
 - [Practical Persistence in Go: Organising Database Access](https://www.alexedwards.net/blog/organising-database-access)
 - [【必須科目 DI】DIの仕組みをGoで実装して理解する](https://qiita.com/yoshinori_hisakawa/items/a944115eb77ed9247794)
+- [pospomeのサーバサイドアーキテクチャ3](https://booth.pm/ja/items/1578182)
