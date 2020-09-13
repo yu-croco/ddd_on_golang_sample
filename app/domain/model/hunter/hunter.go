@@ -6,13 +6,13 @@ import (
 )
 
 type Hunter struct {
-	Id Id `json:hunterId`
-	Name Name `json:hunterName`
-	Life Life `json:life`
-	DefencePower DefencePower `json:defencePower`
-	OffensePower OffensePower `json:offensePower`
+	Id              Id           `json:hunterId`
+	Name            Name         `json:hunterName`
+	Life            Life         `json:life`
+	DefencePower    DefencePower `json:defencePower`
+	OffensePower    OffensePower `json:offensePower`
 	HuntedMaterials []HuntedMonsterMaterial
-	AttackDamage AttackDamage `json:attackDamage`
+	AttackDamage    AttackDamage `json:attackDamage`
 }
 
 type Id int
@@ -26,7 +26,6 @@ func (hunter *Hunter) Attack(monster monster.Monster, damage AttackDamage) (*mon
 	return monster.AttackedBy(damage)
 }
 
-// ToDo: 条件を仕様クラスに切り出す
 func (hunter *Hunter) AttackedBy(givenDamage monster.AttackDamage) (*Hunter, error) {
 	var err error
 
@@ -37,4 +36,12 @@ func (hunter *Hunter) AttackedBy(givenDamage monster.AttackDamage) (*Hunter, err
 	}
 
 	return hunter, err
+}
+
+func (hunter *Hunter) GetMonsterMaterial(monster monster.Monster) (*monster.MonsterMaterial, error) {
+	result, err := monster.TakenMaterial()
+	if err != nil {
+		return result, err
+	}
+	return result, nil
 }

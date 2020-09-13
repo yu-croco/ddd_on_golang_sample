@@ -26,7 +26,6 @@ func (monster *Monster) Attack(hunter hunter.Hunter, damage AttackDamage) (*hunt
 	return hunter.AttackedBy(damage)
 }
 
-// ToDo: 条件を仕様クラスに切り出す
 func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, error) {
 	var err error
 
@@ -37,4 +36,11 @@ func (monster *Monster) AttackedBy(givenDamage hunter.AttackDamage) (*Monster, e
 	}
 
 	return monster, err
+}
+
+func (monster *Monster) TakenMaterial() (*MonsterMaterial, error) {
+	if monster.Life != 0 {
+		return &MonsterMaterial{}, errors.New("まだ生きてるよ")
+	}
+	return &monster.Materials[0], nil
 }
