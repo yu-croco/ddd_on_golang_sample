@@ -35,3 +35,4 @@ WIP
 - [Practical Persistence in Go: Organising Database Access](https://www.alexedwards.net/blog/organising-database-access)
 - [【必須科目 DI】DIの仕組みをGoで実装して理解する](https://qiita.com/yoshinori_hisakawa/items/a944115eb77ed9247794)
 - [pospomeのサーバサイドアーキテクチャ3](https://booth.pm/ja/items/1578182)
+- [GOのORMを分かりやすくまとめてみた【GORM公式ドキュメントの焼き回し】](https://qiita.com/gold-kou/items/45a95d61d253184b0f33)
