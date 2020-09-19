@@ -1,0 +1,4 @@
+package hunter
+
+func AttackMonsterUseCase() {
+}
