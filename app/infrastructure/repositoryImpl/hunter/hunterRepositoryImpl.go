@@ -6,19 +6,21 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
-func FindById(db *gorm.DB, id hunter.Id) *hunter.Hunter {
+// ToDo: 循環参照をどうにかする
+func FindById(db *gorm.DB, id hunter.Id) {
 	var hunterDao *dao.Hunter
 	db.First(&hunterDao, int(id))
 
-	return hunterDao.ConvertToModel()
+	//return hunterDao.ConvertToModel()
 }
 
-func Update(db *gorm.DB, hunter dao.Hunter) *hunter.Hunter {
+// ToDo: 循環参照をどうにかする
+func Update(db *gorm.DB, hunter dao.Hunter) {
 	var hunterDao *dao.Hunter
 
 	db.First(&hunterDao, int(hunter.ID))
 	hunterDao.Life = hunter.Life
 
 	db.Save(&hunterDao)
-	return hunterDao.ConvertToModel()
+	//return hunterDao.ConvertToModel()
 }
