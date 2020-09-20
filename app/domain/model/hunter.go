@@ -20,11 +20,14 @@ func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, helpers.Do
 
 func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, helpers.DomainError) {
 	var err helpers.DomainError
+	diff := hunter.Life - givenDamage
 
-	if hunter.Life >= 0 {
-		hunter.Life = givenDamage
+	if hunter.Life == 0 {
+		err = helpers.NewDomainError("ハンターは既に倒れています")
+	} else if diff >= 0 {
+		hunter.Life = diff
 	} else {
-		err = helpers.NewDomainError("すでに倒しています")
+		hunter.Life = 0
 	}
 
 	return hunter, err
