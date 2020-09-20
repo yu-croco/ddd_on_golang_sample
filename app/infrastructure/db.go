@@ -38,12 +38,16 @@ func Close() {
 }
 
 func autoMigrate() {
-	db.AutoMigrate(&dao.Monster{})
-	db.AutoMigrate(&dao.MonsterMaterial{})
-	db.AutoMigrate(&dao.Hunter{})
-	db.AutoMigrate(&dao.HuntedMonsterMaterial{})
+	db.
+		AutoMigrate(&dao.Monster{}).
+		AutoMigrate(&dao.MonsterMaterial{}).
+		AutoMigrate(&dao.Hunter{}).
+		AutoMigrate(&dao.HuntedMonsterMaterial{})
 }
 
 func execSeeds() {
-	db.Create(&seeds.MonsterSeed).Create(&seeds.HunterSeed)
+	db.
+		Create(&seeds.MonsterSeed).
+		Create(&seeds.MonsterSeed2).
+		Create(&seeds.HunterSeed)
 }

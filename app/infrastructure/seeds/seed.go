@@ -14,6 +14,20 @@ var materials = []dao.MonsterMaterial{
 		Rarity: 1,
 	},
 }
+
+var materials2 = []dao.MonsterMaterial{
+	{
+		ID:     3,
+		Name:   "アルビノの皮",
+		Rarity: 2,
+	},
+	{
+		ID:     4,
+		Name:   "電気袋",
+		Rarity: 2,
+	},
+}
+
 var MonsterSeed = dao.Monster{
 	ID:           1,
 	Name:         "ランポス",
@@ -21,6 +35,15 @@ var MonsterSeed = dao.Monster{
 	DefencePower: 100,
 	OffensePower: 110,
 	Materials:    materials,
+}
+
+var MonsterSeed2 = dao.Monster{
+	ID:           2,
+	Name:         "フルフル",
+	Life:         2300,
+	DefencePower: 300,
+	OffensePower: 250,
+	Materials:    materials2,
 }
 
 var HunterSeed = dao.Hunter{
