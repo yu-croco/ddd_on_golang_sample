@@ -10,16 +10,19 @@ import (
 
 func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *helpers.DomainError) {
 	db := infrastructure.GetDB()
-	hunter := repositoryImpl.FindHunterById(db, hunterId)
-	monster := repositoryImpl.FindMonsterBy(db, monsterId)
+	hunterRepository := repositoryImpl.HunterRepositoryImpl{}
+	monsterRepository := repositoryImpl.MonsterRepositoryImpl{}
+	hunter := hunterRepository.FindById(db, hunterId)
+	monster := monsterRepository.FindById(db, monsterId)
 
 	hunterAttackDamage := service.CalculateAttackMonsterDamage(hunter, monster)
 	damagedMonster, attackErr := hunter.Attack(monster, hunterAttackDamage)
+
 	if attackErr.HasErrors() {
 		return nil, &attackErr
 	}
 
-	updatedMonster := repositoryImpl.UpdateMonster(db, damagedMonster)
+	updatedMonster := monsterRepository.Update(db, damagedMonster)
 
 	return updatedMonster, nil
 }

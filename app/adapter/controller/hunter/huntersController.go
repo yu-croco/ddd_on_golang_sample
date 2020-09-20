@@ -14,7 +14,8 @@ func (ctrl Controller) Show(c *gin.Context) {
 	db := infrastructure.GetDB()
 	hunterId := c.Param("id")
 	id, _ := strconv.Atoi(hunterId)
-	dbResult := repositoryImpl.FindHunterById(db, id)
+	repo := repositoryImpl.HunterRepositoryImpl{}
+	dbResult := repo.FindById(db, id)
 
 	c.JSON(200, dbResult)
 }

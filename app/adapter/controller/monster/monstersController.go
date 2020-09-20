@@ -13,7 +13,7 @@ func (ctrl Controller) Show(c *gin.Context) {
 	db := infrastructure.GetDB()
 	hunterId := c.Param("id")
 	id, _ := strconv.Atoi(hunterId)
-	dbResult := repositoryImpl.FindMonsterBy(db, id)
-
+	repo := repositoryImpl.MonsterRepositoryImpl{}
+	dbResult := repo.FindById(db, id)
 	c.JSON(200, dbResult)
 }

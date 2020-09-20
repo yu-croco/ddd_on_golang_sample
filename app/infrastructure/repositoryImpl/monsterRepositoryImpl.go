@@ -6,7 +6,9 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
-func FindMonsterBy(db *gorm.DB, id int) *model.Monster {
+type MonsterRepositoryImpl struct{}
+
+func (repositoryImpl *MonsterRepositoryImpl) FindById(db *gorm.DB, id int) *model.Monster {
 	monsterDao := dao.Monster{}
 	if db.First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
 	}
@@ -14,7 +16,7 @@ func FindMonsterBy(db *gorm.DB, id int) *model.Monster {
 	return monsterDao.ConvertToModel()
 }
 
-func UpdateMonster(db *gorm.DB, monster *model.Monster) *model.Monster {
+func (repositoryImpl *MonsterRepositoryImpl) Update(db *gorm.DB, monster *model.Monster) *model.Monster {
 	monsterDao := dao.Monster{}
 
 	if db.First(&monsterDao, dao.Monster{ID: uint(monster.Id)}).RecordNotFound() {
