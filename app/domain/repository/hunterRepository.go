@@ -1,8 +1,10 @@
 package repository
 
-import "yu-croco/ddd_on_golang/app/domain/model/hunter"
+import (
+	"yu-croco/ddd_on_golang/app/domain/model"
+)
 
 type HunterRepository interface {
-	FindById(id *hunter.Id)(*hunter.Hunter, error)
-	Update(hunter *hunter.Hunter)(*hunter.Hunter, error)
+	FindById(id *model.Id) (*model.Hunter, error)
+	Update(hunter *model.Hunter) (*model.Hunter, error)
 }

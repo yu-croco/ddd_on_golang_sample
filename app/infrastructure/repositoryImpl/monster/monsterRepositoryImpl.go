@@ -2,12 +2,12 @@ package monster
 
 import (
 	"github.com/jinzhu/gorm"
-	"yu-croco/ddd_on_golang/app/domain/model/monster"
+	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
 // ToDo: 循環参照をどうにかする
-func FindBy(db *gorm.DB, id monster.Id) {
+func FindBy(db *gorm.DB, id model.Id) {
 	var monsterDao *dao.Monster
 	if db.First(&monsterDao, int(id)).RecordNotFound() {
 	}

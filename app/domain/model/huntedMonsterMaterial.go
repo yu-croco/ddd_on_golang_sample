@@ -1,6 +1,6 @@
-package monster
+package model
 
-type MonsterMaterial struct {
+type HuntedMonsterMaterial struct {
 	Name   MaterialName   `json:name`
 	Rarity MaterialRarity `json:rarity`
 }

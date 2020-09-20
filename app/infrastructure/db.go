@@ -13,7 +13,7 @@ var (
 	err error
 )
 
-func Init() {
+func Init() *gorm.DB {
 	config := "host=db port=5432 user=postgres dbname=ddd_on_golang password=ddd_on_golang sslmode=disable"
 	db, err = gorm.Open("postgres", config)
 	if err != nil {
@@ -24,6 +24,7 @@ func Init() {
 	execSeeds()
 
 	fmt.Println("[INFO]DB setup done!")
+	return db
 }
 
 func GetDB() *gorm.DB {

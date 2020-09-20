@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"yu-croco/ddd_on_golang/app/domain/model/monster"
+	"yu-croco/ddd_on_golang/app/domain/model"
 )
 
 type MonsterRepository interface {
-	FindById(id *monster.Id)(*monster.Monster, error)
-	Update(monster *monster.Monster)(*monster.Monster, error)
+	FindById(id *model.Id) (*model.Monster, error)
+	Update(monster *model.Monster) (*model.Monster, error)
 }
