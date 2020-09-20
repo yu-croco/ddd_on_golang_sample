@@ -44,7 +44,5 @@ func autoMigrate() {
 }
 
 func execSeeds() {
-	db.Create(&seeds.MonsterSeed)
-	// ToDo: 中間テーブルにデータが入らないのを修正
-	db.Create(&seeds.HunterSeed)
+	db.Create(&seeds.MonsterSeed).Create(&seeds.HunterSeed)
 }

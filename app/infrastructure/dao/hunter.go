@@ -6,7 +6,7 @@ type Hunter struct {
 	Life            int
 	DefencePower    int
 	OffensePower    int
-	HuntedMaterials []HuntedMonsterMaterial
+	HuntedMaterials []MonsterMaterial `gorm:"many2many:hunted_monster_materials"`
 }
 
 //func (h *Hunter) ConvertToModel() *hunter.Hunter {

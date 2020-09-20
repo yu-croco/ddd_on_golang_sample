@@ -9,7 +9,8 @@ import (
 // ToDo: 循環参照をどうにかする
 func FindBy(db *gorm.DB, id monster.Id) {
 	var monsterDao *dao.Monster
-	db.First(&monsterDao, int(id))
+	if db.First(&monsterDao, int(id)).RecordNotFound() {
+	}
 
 	//return monsterDao.ConvertToModel()
 }
@@ -18,7 +19,8 @@ func FindBy(db *gorm.DB, id monster.Id) {
 func Update(db *gorm.DB, monster dao.Monster) {
 	var monsterDao *dao.Monster
 
-	db.First(&monsterDao, int(monster.ID))
+	if db.First(&monsterDao, int(monster.ID)).RecordNotFound() {
+	}
 	monsterDao.Life = monster.Life
 
 	db.Save(&monsterDao)
