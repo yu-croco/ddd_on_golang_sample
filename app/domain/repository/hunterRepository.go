@@ -5,6 +5,6 @@ import (
 )
 
 type HunterRepository interface {
-	FindById(id *model.Id) (*model.Hunter, error)
+	FindById(id int) (*model.Hunter, error)
 	Update(hunter *model.Hunter) (*model.Hunter, error)
 }

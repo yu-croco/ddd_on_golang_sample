@@ -5,6 +5,6 @@ import (
 )
 
 type MonsterRepository interface {
-	FindById(id *model.Id) (*model.Monster, error)
+	FindById(id int) (*model.Monster, error)
 	Update(monster *model.Monster) (*model.Monster, error)
 }
