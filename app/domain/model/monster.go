@@ -18,7 +18,7 @@ func (monster *Monster) Attack(hunter Hunter, damage int) (*Hunter, errors.AppEr
 	return hunter.AttackedBy(damage)
 }
 
-func (monster *Monster) AttackedBy(givenDamage int) (*Monster, errors.AppError) {
+func (monster *Monster) AttackedBy(givenDamage int) (*Monster, *errors.AppError) {
 	var err errors.AppError
 	diff := monster.Life - givenDamage
 
@@ -30,12 +30,12 @@ func (monster *Monster) AttackedBy(givenDamage int) (*Monster, errors.AppError) 
 		monster.Life = 0
 	}
 
-	return monster, err
+	return monster, &err
 }
 
 func (monster *Monster) TakenMaterial() (*MonsterMaterial, errors.AppError) {
 	if monster.Life != 0 {
-		return &MonsterMaterial{}, errors.NewAppError("このモンスターはまだ生きてるので剥ぎ取れません")
+		return nil, errors.NewAppError("このモンスターはまだ生きてるので剥ぎ取れません")
 	} else {
 		return &monster.Materials[0], errors.AppError{}
 	}
