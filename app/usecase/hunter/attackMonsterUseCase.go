@@ -13,7 +13,7 @@ func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *helpers
 	hunter := repositoryImpl.FindHunterById(db, hunterId)
 	monster := repositoryImpl.FindMonsterBy(db, monsterId)
 
-	hunterAttackDamage := service.CalculateDamage(hunter, monster)
+	hunterAttackDamage := service.CalculateAttackMonsterDamage(hunter, monster)
 	damagedMonster, attackErr := hunter.Attack(monster, hunterAttackDamage)
 	if attackErr.HasErrors() {
 		return nil, &attackErr
