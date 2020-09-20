@@ -1,4 +1,4 @@
-package monster
+package repositoryImpl
 
 import (
 	"github.com/jinzhu/gorm"
@@ -7,16 +7,16 @@ import (
 )
 
 // ToDo: 循環参照をどうにかする
-func FindBy(db *gorm.DB, id model.Id) {
+func FindMonsterBy(db *gorm.DB, id int) *model.Monster {
 	var monsterDao *dao.Monster
-	if db.First(&monsterDao, int(id)).RecordNotFound() {
+	if db.First(&monsterDao, id).RecordNotFound() {
 	}
 
-	//return monsterDao.ConvertToModel()
+	return monsterDao.ConvertToModel()
 }
 
 // ToDo: 循環参照をどうにかする
-func Update(db *gorm.DB, monster dao.Monster) {
+func UpdateMonster(db *gorm.DB, monster dao.Monster) *model.Monster {
 	var monsterDao *dao.Monster
 
 	if db.First(&monsterDao, int(monster.ID)).RecordNotFound() {
@@ -24,5 +24,5 @@ func Update(db *gorm.DB, monster dao.Monster) {
 	monsterDao.Life = monster.Life
 
 	db.Save(&monsterDao)
-	//return monsterDao.ConvertToModel()
+	return monsterDao.ConvertToModel()
 }

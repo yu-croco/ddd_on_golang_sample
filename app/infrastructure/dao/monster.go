@@ -1,5 +1,7 @@
 package dao
 
+import "yu-croco/ddd_on_golang/app/domain/model"
+
 type Monster struct {
 	ID           uint `json:"id" binding:"required"`
 	Name         string
@@ -9,14 +11,14 @@ type Monster struct {
 	Materials    []MonsterMaterial
 }
 
-//func (m *Monster) ConvertToModel() *monster.Monster {
-//	return &monster.Monster{
-//		Id:           monster.Id(int(m.ID)),
-//		Name:         monster.Name(m.Name),
-//		Life:         monster.Life(m.Life),
-//		DefencePower: monster.DefencePower(m.DefencePower),
-//		OffensePower: monster.OffensePower(m.OffensePower),
-//		Materials:    []monster.MonsterMaterial{},
-//		AttackDamage: monster.AttackDamage(0),
-//	}
-//}
+func (m *Monster) ConvertToModel() *model.Monster {
+	return &model.Monster{
+		Id:           int(m.ID),
+		Name:         m.Name,
+		Life:         m.Life,
+		DefencePower: m.DefencePower,
+		OffensePower: m.OffensePower,
+		Materials:    []model.MonsterMaterial{},
+		AttackDamage: 0,
+	}
+}

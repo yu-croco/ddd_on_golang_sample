@@ -1,25 +1,22 @@
-package hunter
+package repositoryImpl
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
+	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
 // ToDo: 循環参照をどうにかする
-func FindById(db *gorm.DB, id int) {
+func FindHunterById(db *gorm.DB, id int) *model.Hunter {
 	hunterDao := dao.Hunter{}
 	if db.Find(&hunterDao, dao.Hunter{ID: uint(id)}).RecordNotFound() {
-		fmt.Println("not foundddddddddddddddddddddd")
 	}
 
-	fmt.Println(hunterDao)
-
-	//return hunterDao.ConvertToModel()
+	return hunterDao.ConvertToModel()
 }
 
 // ToDo: 循環参照をどうにかする
-func Update(db *gorm.DB, hunter dao.Hunter) {
+func UpdateHunter(db *gorm.DB, hunter dao.Hunter) *model.Hunter {
 	var hunterDao *dao.Hunter
 
 	if db.First(&hunterDao, int(hunter.ID)).RecordNotFound() {
@@ -27,5 +24,5 @@ func Update(db *gorm.DB, hunter dao.Hunter) {
 
 	hunterDao.Life = hunter.Life
 	db.Save(&hunterDao)
-	//return hunterDao.ConvertToModel()
+	return hunterDao.ConvertToModel()
 }
