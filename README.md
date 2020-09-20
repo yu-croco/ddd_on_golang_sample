@@ -29,7 +29,8 @@ WIP
 - Genericを使った共通処理が作れないため記述量が増える
     - implicit classが恋しい
     - そもそも言語パラダイム的に兼ね備えていないので文句を言う方が不適切な気もするが...
-- 何も気にしないと `import cycle not allowed` で怒られる...
+- パッケージ構成に慣れが必要
+    - `import cycle not allowed` で怒られる...
 
 ## 参考
 - [Clean Architecture in Go](https://medium.com/@hatajoe/clean-architecture-in-go-4030f11ec1b1)
