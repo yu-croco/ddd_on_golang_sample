@@ -2,7 +2,7 @@ package hunter
 
 import (
 	"github.com/gin-gonic/gin"
-	"strconv"
+	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 	"yu-croco/ddd_on_golang/app/usecase/hunter"
 )
@@ -10,22 +10,20 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	hunterId := c.Param("id")
-	id, _ := strconv.Atoi(hunterId)
+	hunterId := helpers.ConvertToInt(c.Param("id"))
 	repo := repositoryImpl.NewHunterRepositoryImpl()
-	dbResult, _ := repo.FindById(id)
+
+	dbResult, _ := repo.FindById(hunterId)
 
 	c.JSON(200, dbResult)
 }
 
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) Attack(c *gin.Context) {
+	monsterId := helpers.ConvertToInt(c.PostForm("monsterId"))
+	hunterId := helpers.ConvertToInt(c.Param("id"))
 
-	monsterId := c.PostForm("monsterId")
-	monster, _ := strconv.Atoi(monsterId)
-	hunterId := c.Param("id")
-	id, _ := strconv.Atoi(hunterId)
-	result, err := hunter.AttackMonsterUseCase(id, monster)
+	result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
 
 	if err.HasErrors() {
 		c.JSON(200, err)
