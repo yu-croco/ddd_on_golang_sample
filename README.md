@@ -13,23 +13,25 @@
 - docker-compose: 1.26.2
 
 ## 構成
+### app配下の構成
+ドメインで使用するモデルはdomain配下に、DBとのアクセスで使用するモデルはDAOとしてinfrastructure配下にそれぞれ配置した。
+同じような構成を2箇所で記述するのでコード量は増えるが、これによってDomain層のロジックが他の層に漏れ出すことを防げる。
 
 ```
-├── Dockerfile
-├── README.md
-├── app
-│   ├── adapter
-│   ├── domain
-│   ├── infrastructure
-│   └── usecase
-├── bin
-│   ├── build.sh
-│   ├── main
-│   └── tidy.sh
-├── docker-compose.yml
-├── go.mod
-├── go.sum
-└── main.go
+.
+├── adapter
+│   └── controller
+├── domain
+│   ├── helpers
+│   ├── model
+│   └── repository
+├── infrastructure
+│   ├── dao
+│   ├── db.go
+│   ├── repositoryImpl
+│   └── seeds
+└── usecase
+    └── hunter
 ```
 
 ## セットアップ
