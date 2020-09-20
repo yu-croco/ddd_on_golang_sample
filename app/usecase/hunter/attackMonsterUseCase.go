@@ -7,10 +7,10 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
 
-func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.AppError) {
-	hunterRepository := repositoryImpl.NewHunterRepositoryImpl()
-	monsterRepository := repositoryImpl.NewMonsterRepositoryImpl()
+var hunterRepository = repositoryImpl.NewHunterRepositoryImpl()
+var monsterRepository = repositoryImpl.NewMonsterRepositoryImpl()
 
+func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.AppError) {
 	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr
