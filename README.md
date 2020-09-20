@@ -54,6 +54,15 @@ WIP
 - パッケージ構成に慣れが必要
     - `import cycle not allowed` で怒られる...
 
+### 悩みどころ
+- Value Objectの作成
+  - 理想としては
+    - Value Objectそれぞれに対してstructを用意しておき、それらを初期擦る際に `NewHoge` という初期化メソッドを使ってバリデーション付きで生成する
+  - 悩みどころ
+    - 記述量が膨れまくる
+    - 型だけの判定で十分な場合には不要そう
+        - そうでない場合部分的に入れる感じだろうか
+
 ## 参考
 - [Clean Architecture in Go](https://medium.com/@hatajoe/clean-architecture-in-go-4030f11ec1b1)
 - [Practical Persistence in Go: Organising Database Access](https://www.alexedwards.net/blog/organising-database-access)
