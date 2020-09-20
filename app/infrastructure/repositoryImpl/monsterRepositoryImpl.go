@@ -2,12 +2,17 @@ package repositoryImpl
 
 import (
 	"yu-croco/ddd_on_golang/app/domain/model"
+	"yu-croco/ddd_on_golang/app/domain/repository"
 	"yu-croco/ddd_on_golang/app/errors"
 	"yu-croco/ddd_on_golang/app/infrastructure"
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
 type MonsterRepositoryImpl struct{}
+
+func NewMonsterRepositoryImpl() repository.MonsterRepository {
+	return &MonsterRepositoryImpl{}
+}
 
 func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()

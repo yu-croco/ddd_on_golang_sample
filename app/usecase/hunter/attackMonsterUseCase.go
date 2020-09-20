@@ -8,8 +8,8 @@ import (
 )
 
 func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.AppError) {
-	hunterRepository := repositoryImpl.HunterRepositoryImpl{}
-	monsterRepository := repositoryImpl.MonsterRepositoryImpl{}
+	hunterRepository := repositoryImpl.NewHunterRepositoryImpl()
+	monsterRepository := repositoryImpl.NewMonsterRepositoryImpl()
 
 	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
 	if hunterFindErr.HasErrors() {
