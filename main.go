@@ -17,6 +17,7 @@ func main() {
 	{
 		ctrl := hunter.Controller{}
 		hunters.GET("/:id", ctrl.Show)
+		hunters.PUT("/:id/attack", ctrl.Attack)
 	}
 	monsters := r.Group("/monsters")
 	{
