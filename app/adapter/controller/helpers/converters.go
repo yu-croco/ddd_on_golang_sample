@@ -11,6 +11,7 @@ func ConvertToInt(modelId string) int {
 	return id
 }
 
+// Note: interface使うと型が壊れるのでアレだけど、そこはrequest testを作ることで担保する形でも良いかも
 func Response(c *gin.Context, result interface{}, err *errors.AppError) {
 	if err.HasErrors() {
 		c.JSON(400, err)
