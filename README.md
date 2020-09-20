@@ -12,6 +12,26 @@
 - Docker: 19.03.12
 - docker-compose: 1.26.2
 
+## 構成
+
+```
+├── Dockerfile
+├── README.md
+├── app
+│   ├── adapter
+│   ├── domain
+│   ├── infrastructure
+│   └── usecase
+├── bin
+│   ├── build.sh
+│   ├── main
+│   └── tidy.sh
+├── docker-compose.yml
+├── go.mod
+├── go.sum
+└── main.go
+```
+
 ## セットアップ
 - このレポジトリをgit cloneする
 - `docker-compose up`でAPIサーバーとDBが起動する
