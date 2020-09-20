@@ -12,6 +12,6 @@ func (ctrl Controller) Show(c *gin.Context) {
 	hunterId := helpers.ConvertToInt(c.Param("id"))
 	repo := repositoryImpl.NewMonsterRepositoryImpl()
 
-	dbResult, _ := repo.FindById(hunterId)
-	c.JSON(200, dbResult)
+	dbResult, err := repo.FindById(hunterId)
+	helpers.Response(c, dbResult, err)
 }

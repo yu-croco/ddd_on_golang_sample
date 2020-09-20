@@ -13,9 +13,9 @@ func (ctrl Controller) Show(c *gin.Context) {
 	hunterId := helpers.ConvertToInt(c.Param("id"))
 	repo := repositoryImpl.NewHunterRepositoryImpl()
 
-	dbResult, _ := repo.FindById(hunterId)
+	dbResult, err := repo.FindById(hunterId)
 
-	c.JSON(200, dbResult)
+	helpers.Response(c, dbResult, err)
 }
 
 // ToDo: メソッド名とActionを統一させる
@@ -25,9 +25,5 @@ func (ctrl Controller) Attack(c *gin.Context) {
 
 	result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
 
-	if err.HasErrors() {
-		c.JSON(200, err)
-	} else {
-		c.JSON(200, result)
-	}
+	helpers.Response(c, result, err)
 }
