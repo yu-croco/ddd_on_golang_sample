@@ -11,6 +11,8 @@ type Monster struct {
 	Materials    []MonsterMaterial
 }
 
+type Monsters []Monster
+
 func (m *Monster) ConvertToModel() *model.Monster {
 	return &model.Monster{
 		Id:           int(m.ID),
@@ -21,4 +23,22 @@ func (m *Monster) ConvertToModel() *model.Monster {
 		Materials:    []model.MonsterMaterial{},
 		AttackDamage: 0,
 	}
+}
+
+func (monsters Monsters) ConvertToModel() *[]model.Monster {
+	monsterModels := make([]model.Monster, len(monsters))
+
+	for idx, monster := range monsters {
+		model := model.Monster{
+			Id:           int(monster.ID),
+			Name:         monster.Name,
+			Life:         monster.Life,
+			DefencePower: monster.DefencePower,
+			OffensePower: monster.OffensePower,
+			Materials:    []model.MonsterMaterial{},
+			AttackDamage: 0,
+		}
+		monsterModels[idx] = model
+	}
+	return &monsterModels
 }
