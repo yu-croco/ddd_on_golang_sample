@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/hunter"
+	"yu-croco/ddd_on_golang/app/adapter/controller/monster"
 	"yu-croco/ddd_on_golang/app/infrastructure"
 )
 
@@ -16,6 +17,11 @@ func main() {
 	{
 		ctrl := hunter.Controller{}
 		hunters.GET("/:id", ctrl.Show)
+	}
+	monsters := r.Group("/monsters")
+	{
+		ctrl := monster.Controller{}
+		monsters.GET("/:id", ctrl.Show)
 	}
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")

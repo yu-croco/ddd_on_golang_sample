@@ -6,16 +6,14 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
-// ToDo: 循環参照をどうにかする
 func FindMonsterBy(db *gorm.DB, id int) *model.Monster {
-	var monsterDao *dao.Monster
+	monsterDao := dao.Monster{}
 	if db.First(&monsterDao, id).RecordNotFound() {
 	}
 
 	return monsterDao.ConvertToModel()
 }
 
-// ToDo: 循環参照をどうにかする
 func UpdateMonster(db *gorm.DB, monster dao.Monster) *model.Monster {
 	var monsterDao *dao.Monster
 

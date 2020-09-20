@@ -6,7 +6,6 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dao"
 )
 
-// ToDo: 循環参照をどうにかする
 func FindHunterById(db *gorm.DB, id int) *model.Hunter {
 	hunterDao := dao.Hunter{}
 	if db.Find(&hunterDao, dao.Hunter{ID: uint(id)}).RecordNotFound() {
@@ -15,7 +14,6 @@ func FindHunterById(db *gorm.DB, id int) *model.Hunter {
 	return hunterDao.ConvertToModel()
 }
 
-// ToDo: 循環参照をどうにかする
 func UpdateHunter(db *gorm.DB, hunter dao.Hunter) *model.Hunter {
 	var hunterDao *dao.Hunter
 
