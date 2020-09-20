@@ -14,7 +14,7 @@ type Hunter struct {
 	AttackDamage    int `json:attackDamage`
 }
 
-func (hunter *Hunter) Attack(monster Monster, damage int) (*Monster, helpers.DomainError) {
+func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, helpers.DomainError) {
 	return monster.AttackedBy(damage)
 }
 

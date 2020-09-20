@@ -1,20 +1,25 @@
 package helpers
 
-import "errors"
+import (
+	"errors"
+)
 
 type DomainError struct {
-	errors []error `json:errors`
+	Errors []string `json:"errors"`
 }
 
 func NewDomainError(message string) DomainError {
-	var errorResult []error
+	var errorResult []string
 
 	err := errors.New(message)
-	errorResult = append(errorResult, err)
+	errorResult = append(errorResult, err.Error())
 
-	return DomainError{errors: errorResult}
+	return DomainError{Errors: errorResult}
 }
 
 func (domainErr *DomainError) HasErrors() bool {
-	return len(domainErr.errors) >= 1
+	if domainErr == nil {
+		return false
+	}
+	return len(domainErr.Errors) >= 1
 }

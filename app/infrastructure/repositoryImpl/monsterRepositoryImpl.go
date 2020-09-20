@@ -8,16 +8,16 @@ import (
 
 func FindMonsterBy(db *gorm.DB, id int) *model.Monster {
 	monsterDao := dao.Monster{}
-	if db.First(&monsterDao, id).RecordNotFound() {
+	if db.First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
 	}
 
 	return monsterDao.ConvertToModel()
 }
 
-func UpdateMonster(db *gorm.DB, monster dao.Monster) *model.Monster {
-	var monsterDao *dao.Monster
+func UpdateMonster(db *gorm.DB, monster *model.Monster) *model.Monster {
+	monsterDao := dao.Monster{}
 
-	if db.First(&monsterDao, int(monster.ID)).RecordNotFound() {
+	if db.First(&monsterDao, dao.Monster{ID: uint(monster.Id)}).RecordNotFound() {
 	}
 	monsterDao.Life = monster.Life
 
