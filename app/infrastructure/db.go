@@ -49,5 +49,6 @@ func execSeeds() {
 	db.
 		Create(&seeds.MonsterSeed).
 		Create(&seeds.MonsterSeed2).
-		Create(&seeds.HunterSeed)
+		Create(&seeds.HunterSeed).
+		Create(&seeds.HunterSeed2)
 }

@@ -54,3 +54,12 @@ var HunterSeed = dao.Hunter{
 	OffensePower:    110,
 	HuntedMaterials: materials,
 }
+
+var HunterSeed2 = dao.Hunter{
+	ID:              2,
+	Name:            "中級ハンター",
+	Life:            450,
+	DefencePower:    280,
+	OffensePower:    310,
+	HuntedMaterials: materials2,
+}
