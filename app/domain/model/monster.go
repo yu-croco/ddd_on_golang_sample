@@ -1,7 +1,7 @@
 package model
 
 import (
-	"yu-croco/ddd_on_golang/app/domain/helpers"
+	"yu-croco/ddd_on_golang/app/errors"
 )
 
 type Monster struct {
@@ -14,16 +14,16 @@ type Monster struct {
 	AttackDamage int `json:attackDamage`
 }
 
-func (monster *Monster) Attack(hunter Hunter, damage int) (*Hunter, helpers.DomainError) {
+func (monster *Monster) Attack(hunter Hunter, damage int) (*Hunter, errors.AppError) {
 	return hunter.AttackedBy(damage)
 }
 
-func (monster *Monster) AttackedBy(givenDamage int) (*Monster, helpers.DomainError) {
-	var err helpers.DomainError
+func (monster *Monster) AttackedBy(givenDamage int) (*Monster, errors.AppError) {
+	var err errors.AppError
 	diff := monster.Life - givenDamage
 
 	if monster.Life == 0 {
-		err = helpers.NewDomainError("このモンスターはすでに倒しています")
+		err = errors.NewAppError("このモンスターはすでに倒しています")
 	} else if diff >= 0 {
 		monster.Life = diff
 	} else {
@@ -33,10 +33,10 @@ func (monster *Monster) AttackedBy(givenDamage int) (*Monster, helpers.DomainErr
 	return monster, err
 }
 
-func (monster *Monster) TakenMaterial() (*MonsterMaterial, helpers.DomainError) {
+func (monster *Monster) TakenMaterial() (*MonsterMaterial, errors.AppError) {
 	if monster.Life != 0 {
-		return &MonsterMaterial{}, helpers.NewDomainError("このモンスターはまだ生きてるので剥ぎ取れません")
+		return &MonsterMaterial{}, errors.NewAppError("このモンスターはまだ生きてるので剥ぎ取れません")
 	} else {
-		return &monster.Materials[0], helpers.DomainError{}
+		return &monster.Materials[0], errors.AppError{}
 	}
 }

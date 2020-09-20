@@ -13,6 +13,6 @@ func (ctrl Controller) Show(c *gin.Context) {
 	id, _ := strconv.Atoi(hunterId)
 	repo := repositoryImpl.MonsterRepositoryImpl{}
 
-	dbResult := repo.FindById(id)
+	dbResult, _ := repo.FindById(id)
 	c.JSON(200, dbResult)
 }

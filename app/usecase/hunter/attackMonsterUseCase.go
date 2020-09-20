@@ -1,17 +1,25 @@
 package hunter
 
 import (
-	"yu-croco/ddd_on_golang/app/domain/helpers"
 	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/domain/service"
+	"yu-croco/ddd_on_golang/app/errors"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
 
-func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *helpers.DomainError) {
+func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.AppError) {
 	hunterRepository := repositoryImpl.HunterRepositoryImpl{}
 	monsterRepository := repositoryImpl.MonsterRepositoryImpl{}
-	hunter := hunterRepository.FindById(hunterId)
-	monster := monsterRepository.FindById(monsterId)
+
+	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
+	if hunterFindErr.HasErrors() {
+		return nil, hunterFindErr
+	}
+
+	monster, monsterFindErr := monsterRepository.FindById(monsterId)
+	if monsterFindErr.HasErrors() {
+		return nil, monsterFindErr
+	}
 
 	hunterAttackDamage := service.CalculateAttackMonsterDamage(hunter, monster)
 	damagedMonster, attackErr := hunter.Attack(monster, hunterAttackDamage)
@@ -20,7 +28,10 @@ func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *helpers
 		return nil, &attackErr
 	}
 
-	updatedMonster := monsterRepository.Update(damagedMonster)
+	updatedMonster, updateErr := monsterRepository.Update(damagedMonster)
+	if updateErr.HasErrors() {
+		return nil, updateErr
+	}
 
 	return updatedMonster, nil
 }

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"yu-croco/ddd_on_golang/app/domain/helpers"
+	"yu-croco/ddd_on_golang/app/errors"
 )
 
 type Hunter struct {
@@ -14,16 +14,16 @@ type Hunter struct {
 	AttackDamage    int `json:attackDamage`
 }
 
-func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, helpers.DomainError) {
+func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, errors.AppError) {
 	return monster.AttackedBy(damage)
 }
 
-func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, helpers.DomainError) {
-	var err helpers.DomainError
+func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, errors.AppError) {
+	var err errors.AppError
 	diff := hunter.Life - givenDamage
 
 	if hunter.Life == 0 {
-		err = helpers.NewDomainError("ハンターは既に倒れています")
+		err = errors.NewAppError("ハンターは既に倒れています")
 	} else if diff >= 0 {
 		hunter.Life = diff
 	} else {
@@ -33,7 +33,7 @@ func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, helpers.DomainError)
 	return hunter, err
 }
 
-func (hunter *Hunter) GetMonsterMaterial(monster Monster) (*MonsterMaterial, helpers.DomainError) {
+func (hunter *Hunter) GetMonsterMaterial(monster Monster) (*MonsterMaterial, errors.AppError) {
 	result, err := monster.TakenMaterial()
 
 	return result, err
