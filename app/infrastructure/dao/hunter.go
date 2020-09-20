@@ -11,6 +11,8 @@ type Hunter struct {
 	HuntedMaterials []MonsterMaterial `gorm:"many2many:hunted_monster_materials"`
 }
 
+type Hunters []Hunter
+
 func (h *Hunter) ConvertToModel() *model.Hunter {
 	return &model.Hunter{
 		Id:              int(h.ID),
@@ -21,4 +23,23 @@ func (h *Hunter) ConvertToModel() *model.Hunter {
 		HuntedMaterials: []model.HuntedMonsterMaterial{},
 		AttackDamage:    0,
 	}
+}
+
+func (hunters Hunters) ConvertToModel() *[]model.Hunter {
+	result := make([]model.Hunter, len(hunters))
+
+	for idx, hunter := range hunters {
+		hunterModel := model.Hunter{
+			Id:              int(hunter.ID),
+			Name:            hunter.Name,
+			Life:            hunter.Life,
+			DefencePower:    hunter.DefencePower,
+			OffensePower:    hunter.OffensePower,
+			HuntedMaterials: []model.HuntedMonsterMaterial{},
+			AttackDamage:    0,
+		}
+		result[idx] = hunterModel
+	}
+
+	return &result
 }

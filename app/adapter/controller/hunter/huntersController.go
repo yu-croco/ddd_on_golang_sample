@@ -3,6 +3,7 @@ package hunter
 import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
+	"yu-croco/ddd_on_golang/app/infrastructure/queryImpl"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 	"yu-croco/ddd_on_golang/app/usecase/hunter"
 )
@@ -26,4 +27,9 @@ func (ctrl Controller) Attack(c *gin.Context) {
 	result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
 
 	helpers.Response(c, result, err)
+}
+
+func (ctrl Controller) Index(c *gin.Context) {
+	result := queryImpl.NewHunterQueryImpl().FindAll()
+	helpers.Response(c, result, nil)
 }
