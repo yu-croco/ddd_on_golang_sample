@@ -3,6 +3,7 @@ package monster
 import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
+	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure/queryImpl/monster"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 	usecase "yu-croco/ddd_on_golang/app/usecase/monster"
@@ -11,11 +12,15 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	hunterId := helpers.ConvertToInt(c.Param("id"))
-	repo := repositoryImpl.NewMonsterRepositoryImpl()
+	monsterId, hunterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	} else {
+		repo := repositoryImpl.NewMonsterRepositoryImpl()
 
-	dbResult, err := repo.FindById(hunterId)
-	helpers.Response(c, dbResult, err)
+		dbResult, err := repo.FindById(monsterId)
+		helpers.Response(c, dbResult, err)
+	}
 }
 
 func (ctrl Controller) Index(c *gin.Context) {
@@ -25,10 +30,15 @@ func (ctrl Controller) Index(c *gin.Context) {
 
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) Attack(c *gin.Context) {
-	monsterId := helpers.ConvertToInt(c.Param("id"))
-	hunterId := helpers.ConvertToInt(c.PostForm("hunterId"))
+	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
 
-	result, err := usecase.AttackHunterUseCase(monsterId, hunterId)
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.PostForm("hunterId")))
+	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
+		errs := monsterIdErr.Concat(*hunterIdErr)
+		helpers.Response(c, nil, &errs)
+	} else {
+		result, err := usecase.AttackHunterUseCase(monsterId, hunterId)
 
-	helpers.Response(c, result, err)
+		helpers.Response(c, result, err)
+	}
 }
