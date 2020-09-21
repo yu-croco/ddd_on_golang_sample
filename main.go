@@ -26,6 +26,7 @@ func main() {
 		ctrl := monster.Controller{}
 		monsters.GET("/:id", ctrl.Show)
 		monsters.GET("/", ctrl.Index)
+		monsters.PUT("/:id/attack", ctrl.Attack)
 	}
 
 	r.Run()

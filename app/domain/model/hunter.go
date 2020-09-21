@@ -18,7 +18,7 @@ func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, *errors.Ap
 	return monster.AttackedBy(damage)
 }
 
-func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, errors.AppError) {
+func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, *errors.AppError) {
 	var err errors.AppError
 	diff := hunter.Life - givenDamage
 
@@ -30,7 +30,7 @@ func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, errors.AppError) {
 		hunter.Life = 0
 	}
 
-	return hunter, err
+	return hunter, &err
 }
 
 func (hunter *Hunter) GetMonsterMaterial(monster *Monster) (*MonsterMaterial, *errors.AppError) {
