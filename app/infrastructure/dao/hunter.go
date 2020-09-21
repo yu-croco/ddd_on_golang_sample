@@ -1,6 +1,8 @@
 package dao
 
-import "yu-croco/ddd_on_golang/app/domain/model"
+import (
+	"yu-croco/ddd_on_golang/app/domain/model"
+)
 
 type Hunter struct {
 	ID              uint `json:"id" binding:"required"`
@@ -35,11 +37,23 @@ func (hunters Hunters) ConvertToModel() *[]model.Hunter {
 			Life:            hunter.Life,
 			DefencePower:    hunter.DefencePower,
 			OffensePower:    hunter.OffensePower,
-			HuntedMaterials: []model.HuntedMonsterMaterial{},
+			HuntedMaterials: convertMaterialRowToModel(hunter),
 			AttackDamage:    0,
 		}
 		result[idx] = hunterModel
 	}
 
 	return &result
+}
+
+func convertMaterialRowToModel(hunter Hunter) []model.HuntedMonsterMaterial {
+	materials := make([]model.HuntedMonsterMaterial, len(hunter.HuntedMaterials))
+	for idx2, material := range hunter.HuntedMaterials {
+		materials[idx2] = model.HuntedMonsterMaterial{
+			Name:   material.Name,
+			Rarity: material.Rarity,
+		}
+	}
+
+	return materials
 }

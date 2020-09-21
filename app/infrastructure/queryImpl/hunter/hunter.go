@@ -17,7 +17,7 @@ func (repo HunterQueryImpl) FindAll() *[]model.Hunter {
 	db := infrastructure.GetDB()
 	hunterDaos := dao.Hunters{}
 
-	db.Find(&hunterDaos)
+	db.Preload("HuntedMaterials").Find(&hunterDaos)
 
 	return hunterDaos.ConvertToModel()
 }
