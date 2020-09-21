@@ -1,6 +1,4 @@
 # DDD on Golang
-**基本的にまだ開発中**
-
 - [yu-croco/ddd_on_scala](https://github.com/yu-croco/ddd_on_scala) のGolangバージョン
 - Golang（Gin）を使い、なんちゃってモンハンの世界をDomain-Driven Designで実装している
 - アーキテクチャとしてのサンプルのため、ORM(Gorm)の使い方は割と適当にしている
@@ -102,8 +100,8 @@ Golangを用いてDDDをどこまでできたのか（できそうか）をま�
     - Value Objectそれぞれに対してstructを用意しておき、それらを初期擦る際に `NewHoge` という初期化メソッドを使ってバリデーション付きで生成する
   - 悩みどころ
     - 記述量が膨れまくる
-    - 型だけの判定で十分な場合には不要そう
-        - そうでない場合部分的に入れる感じだろうか
+    - adapter層に関してはJSONからの変換処理があるので面倒
+        - `c.BindJson(&hoge)` したあとにバリデーション実行は結構面倒そう
 
 ## DDDらしさを引き出すためのTips
 ### interfaceを使ったDI
