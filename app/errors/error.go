@@ -1,6 +1,8 @@
 package errors
 
-import "errors"
+import (
+	"errors"
+)
 
 // Note: 各層でのエラーハンドラーを作ると、層ごとで型が生まれてどこで変換するか面倒なので
 //共通のエラー型を用意
@@ -26,9 +28,11 @@ func (appErr *AppError) HasErrors() bool {
 }
 
 func (appErr *AppError) Concat(other AppError) AppError {
-	len := len(appErr.Errors) + len(other.Errors)
-	errors := make([]string, len)
+	if other.Errors == nil {
+		return *appErr
+	}
 
+	var errors []string
 	errors = append(append(errors, appErr.Errors...), other.Errors...)
 
 	return newAppErrors(errors)

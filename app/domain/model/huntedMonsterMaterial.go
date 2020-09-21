@@ -1,9 +1,6 @@
 package model
 
 type HuntedMonsterMaterial struct {
-	Name   MaterialName   `json:name`
-	Rarity MaterialRarity `json:rarity`
+	Name   string `json:name`
+	Rarity int    `json:rarity`
 }
-
-type MaterialName string
-type MaterialRarity int
