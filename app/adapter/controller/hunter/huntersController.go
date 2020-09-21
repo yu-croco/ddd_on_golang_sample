@@ -12,30 +12,23 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
-	if hunterIdErr.HasErrors() {
-		helpers.Response(c, nil, hunterIdErr)
-	} else {
-		repo := repositoryImpl.NewHunterRepositoryImpl()
-		dbResult, err := repo.FindById(hunterId)
+	hunterId := helpers.ConvertToInt(c.Param("id"))
 
-		helpers.Response(c, dbResult, err)
-	}
+	repo := repositoryImpl.NewHunterRepositoryImpl()
+	result, errs := repo.FindById(hunterId)
+
+	helpers.Response(c, result, errs)
 }
 
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) Attack(c *gin.Context) {
-	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.PostForm("monsterId")))
-	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
+	var monster model.Monster
+	c.BindJSON(&monster)
 
-	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
-		helpers.Response(c, nil, &errs)
-	} else {
-		result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
+	hunterId := helpers.ConvertToInt(c.Param("id"))
+	result, errs := hunter.AttackMonsterUseCase(hunterId, monster.Id)
 
-		helpers.Response(c, result, err)
-	}
+	helpers.Response(c, result, errs)
 }
 
 func (ctrl Controller) Index(c *gin.Context) {
@@ -45,14 +38,11 @@ func (ctrl Controller) Index(c *gin.Context) {
 
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) GetMaterial(c *gin.Context) {
-	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.PostForm("monsterId")))
-	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
+	var monster model.Monster
+	c.BindJSON(&monster)
+	hunterId := helpers.ConvertToInt(c.Param("id"))
 
-	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
-		helpers.Response(c, nil, &errs)
-	} else {
-		result, err := hunter.GetMaterialFromMonsterUseCase(hunterId, monsterId)
-		helpers.Response(c, result, err)
-	}
+	result, errs := hunter.GetMaterialFromMonsterUseCase(hunterId, monster.Id)
+
+	helpers.Response(c, result, errs)
 }

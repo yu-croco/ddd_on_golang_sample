@@ -27,9 +27,9 @@ func (appErr *AppError) HasErrors() bool {
 	return len(appErr.Errors) >= 1
 }
 
-func (appErr *AppError) Concat(other *AppError) AppError {
+func (appErr *AppError) Concat(other *AppError) *AppError {
 	if other.Errors == nil {
-		return *appErr
+		return appErr
 	}
 
 	var errors []string
@@ -38,6 +38,6 @@ func (appErr *AppError) Concat(other *AppError) AppError {
 	return newAppErrors(errors)
 }
 
-func newAppErrors(messages []string) AppError {
-	return AppError{Errors: messages}
+func newAppErrors(messages []string) *AppError {
+	return &AppError{Errors: messages}
 }

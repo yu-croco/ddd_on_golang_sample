@@ -14,13 +14,13 @@ func NewMonsterRepositoryImpl() repository.MonsterRepository {
 	return &MonsterRepositoryImpl{}
 }
 
-func (repositoryImpl *MonsterRepositoryImpl) FindById(id model.MonsterId) (*model.Monster, *errors.AppError) {
+func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	monsterDao := dao.Monster{}
 
 	if db.Preload("Materials").First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
-		err = notFoundMonsterError(id.ToInt())
+		err = notFoundMonsterError(id)
 		return nil, &err
 	}
 
@@ -33,7 +33,7 @@ func (repositoryImpl *MonsterRepositoryImpl) Update(monster *model.Monster) (*mo
 	monsterDao := dao.Monster{}
 
 	if db.First(&monsterDao, dao.Monster{ID: uint(monster.Id)}).RecordNotFound() {
-		err = notFoundMonsterError(monster.Id.ToInt())
+		err = notFoundMonsterError(monster.Id)
 		return nil, &err
 	}
 

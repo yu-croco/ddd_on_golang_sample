@@ -23,7 +23,7 @@ func (m *Monster) ConvertToModel() *model.Monster {
 	}
 
 	return &model.Monster{
-		Id:           model.MonsterId(m.ID),
+		Id:           int(m.ID),
 		Name:         m.Name,
 		Life:         m.Life,
 		DefencePower: m.DefencePower,
@@ -38,7 +38,7 @@ func (monsters Monsters) ConvertToModel() *[]model.Monster {
 
 	for idx, monster := range monsters {
 		model := model.Monster{
-			Id:           model.MonsterId(monster.ID),
+			Id:           int(monster.ID),
 			Name:         monster.Name,
 			Life:         monster.Life,
 			DefencePower: monster.DefencePower,

@@ -5,31 +5,13 @@ import (
 )
 
 type Hunter struct {
-	Id              HunterId `json:hunterId`
-	Name            string   `json:hunterName`
-	Life            int      `json:life`
-	DefencePower    int      `json:defencePower`
-	OffensePower    int      `json:offensePower`
+	Id              int    `json:"hunterId"`
+	Name            string `json:"hunterName"`
+	Life            int    `json:"life"`
+	DefencePower    int    `json:"defencePower"`
+	OffensePower    int    `json:"offensePower"`
 	HuntedMaterials []HuntedMonsterMaterial
-	AttackDamage    int `json:attackDamage`
-}
-
-type HunterId int
-
-func (id HunterId) ToInt() int {
-	return int(id)
-}
-
-func NewHunterId(value int) (HunterId, *errors.AppError) {
-	var hunterId HunterId
-	var err errors.AppError
-
-	if value <= 0 {
-		err = errors.NewAppError("hunterIdは1以上の数字で指定してください")
-	}
-	hunterId = HunterId(value)
-
-	return hunterId, &err
+	AttackDamage    int `json:"attackDamage"`
 }
 
 func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, *errors.AppError) {

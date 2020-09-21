@@ -1,6 +1,6 @@
 package model
 
 type MonsterMaterial struct {
-	Name   string `json:name`
-	Rarity int    `json:rarity`
+	Name   string `json:"name"`
+	Rarity int    `json:"rarity"`
 }

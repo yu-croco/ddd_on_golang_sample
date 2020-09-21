@@ -12,15 +12,12 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	monsterId, hunterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
-	if hunterIdErr.HasErrors() {
-		helpers.Response(c, nil, hunterIdErr)
-	} else {
-		repo := repositoryImpl.NewMonsterRepositoryImpl()
+	monsterId := helpers.ConvertToInt(c.Param("id"))
 
-		dbResult, err := repo.FindById(monsterId)
-		helpers.Response(c, dbResult, err)
-	}
+	repo := repositoryImpl.NewMonsterRepositoryImpl()
+	result, errs := repo.FindById(monsterId)
+
+	helpers.Response(c, result, errs)
 }
 
 func (ctrl Controller) Index(c *gin.Context) {
@@ -30,15 +27,11 @@ func (ctrl Controller) Index(c *gin.Context) {
 
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) Attack(c *gin.Context) {
-	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
+	var hunter model.Hunter
+	c.BindJSON(&hunter)
+	monsterId := helpers.ConvertToInt(c.Param("id"))
 
-	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.PostForm("hunterId")))
-	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
-		helpers.Response(c, nil, &errs)
-	} else {
-		result, err := usecase.AttackHunterUseCase(monsterId, hunterId)
+	result, errs := usecase.AttackHunterUseCase(monsterId, hunter.Id)
 
-		helpers.Response(c, result, err)
-	}
+	helpers.Response(c, result, errs)
 }
