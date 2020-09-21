@@ -61,13 +61,13 @@
 
 ![hunter_attacks_monster](./public/images/hunter_attacks_monster.png)
 
-- ハンターが倒したモンスターから素材を剥ぎ取る(WIP)
+- ハンターが倒したモンスターから素材を剥ぎ取る
     - 確認コマンド: `bin/getMaterialFromMonster.sh`
 
 ![get_material_from_monster](./public/images/get_material_from_monster.png)
 
 ### モンスター主体のケース
-- モンスターがハンターを攻撃する(WIP)
+- モンスターがハンターを攻撃する
     - 確認コマンド: `bin/attackHunter.sh`
 
 ![monster_attacks_hunter](./public/images/monster_attacks_hunter.png)
