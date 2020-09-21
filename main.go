@@ -19,6 +19,7 @@ func main() {
 		hunters.GET("/:id", ctrl.Show)
 		hunters.GET("/", ctrl.Index)
 		hunters.PUT("/:id/attack", ctrl.Attack)
+		hunters.POST("/:id/get_material_from_monster", ctrl.GetMaterial)
 	}
 	monsters := r.Group("/monsters")
 	{

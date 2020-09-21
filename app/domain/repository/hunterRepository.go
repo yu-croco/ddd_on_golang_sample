@@ -8,4 +8,5 @@ import (
 type HunterRepository interface {
 	FindById(id int) (*model.Hunter, *errors.AppError)
 	Update(hunter *model.Hunter) (*model.Hunter, *errors.AppError)
+	AddMonsterMaterial(hunter *model.Hunter, material *model.MonsterMaterial) *errors.AppError
 }

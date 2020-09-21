@@ -33,3 +33,13 @@ func (ctrl Controller) Index(c *gin.Context) {
 	result := hunter2.NewHunterQueryImpl().FindAll()
 	helpers.Response(c, result, nil)
 }
+
+// ToDo: メソッド名とActionを統一させる
+func (ctrl Controller) GetMaterial(c *gin.Context) {
+	monsterId := helpers.ConvertToInt(c.PostForm("monsterId"))
+	hunterId := helpers.ConvertToInt(c.Param("id"))
+
+	result, err := hunter.GetMaterialFromMonsterUseCase(hunterId, monsterId)
+
+	helpers.Response(c, result, err)
+}

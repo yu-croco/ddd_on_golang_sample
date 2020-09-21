@@ -21,5 +21,7 @@ func GetMaterialFromMonsterUseCase(hunterId int, monsterId int) (*model.MonsterM
 		return nil, takeErr
 	}
 
+	hunterRepository.AddMonsterMaterial(hunter, takenMaterial)
+
 	return takenMaterial, nil
 }

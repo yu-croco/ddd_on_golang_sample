@@ -14,13 +14,21 @@ type Monster struct {
 type Monsters []Monster
 
 func (m *Monster) ConvertToModel() *model.Monster {
+	var materials = make([]model.MonsterMaterial, len(m.Materials))
+	for idx, material := range m.Materials {
+		materials[idx] = model.MonsterMaterial{
+			Name:   material.Name,
+			Rarity: material.Rarity,
+		}
+	}
+
 	return &model.Monster{
 		Id:           int(m.ID),
 		Name:         m.Name,
 		Life:         m.Life,
 		DefencePower: m.DefencePower,
 		OffensePower: m.OffensePower,
-		Materials:    []model.MonsterMaterial{},
+		Materials:    materials,
 		AttackDamage: 0,
 	}
 }

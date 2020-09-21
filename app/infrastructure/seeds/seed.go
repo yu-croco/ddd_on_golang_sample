@@ -5,7 +5,7 @@ import "yu-croco/ddd_on_golang/app/infrastructure/dao"
 var materials = []dao.MonsterMaterial{
 	{
 		ID:     1,
-		Name:   "ランポスの革",
+		Name:   "ランポスの皮",
 		Rarity: 1,
 	},
 	{
@@ -52,7 +52,7 @@ var HunterSeed = dao.Hunter{
 	Life:            150,
 	DefencePower:    100,
 	OffensePower:    110,
-	HuntedMaterials: materials,
+	HuntedMaterials: []dao.MonsterMaterial{},
 }
 
 var HunterSeed2 = dao.Hunter{

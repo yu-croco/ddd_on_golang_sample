@@ -19,7 +19,7 @@ func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *
 	var err errors.AppError
 	monsterDao := dao.Monster{}
 
-	if db.First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
+	if db.Preload("Materials").First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
 		err = notFoundMonsterError(id)
 		return nil, &err
 	}
