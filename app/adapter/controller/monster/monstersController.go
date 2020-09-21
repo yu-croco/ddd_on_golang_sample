@@ -34,7 +34,7 @@ func (ctrl Controller) Attack(c *gin.Context) {
 
 	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.PostForm("hunterId")))
 	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
+		errs := monsterIdErr.Concat(*hunterIdErr)
 		helpers.Response(c, nil, &errs)
 	} else {
 		result, err := usecase.AttackHunterUseCase(monsterId, hunterId)

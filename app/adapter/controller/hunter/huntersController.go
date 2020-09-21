@@ -26,16 +26,18 @@ func (ctrl Controller) Show(c *gin.Context) {
 // ToDo: メソッド名とActionを統一させる
 func (ctrl Controller) Attack(c *gin.Context) {
 	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.PostForm("monsterId")))
-	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
-
-	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
-		helpers.Response(c, nil, &errs)
-	} else {
-		result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
-
-		helpers.Response(c, result, err)
+	if monsterIdErr.HasErrors() {
+		helpers.Response(c, nil, monsterIdErr)
 	}
+
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	}
+
+	result, err := hunter.AttackMonsterUseCase(hunterId, monsterId)
+
+	helpers.Response(c, result, err)
 }
 
 func (ctrl Controller) Index(c *gin.Context) {
@@ -49,7 +51,7 @@ func (ctrl Controller) GetMaterial(c *gin.Context) {
 	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
 
 	if monsterIdErr.HasErrors() || hunterIdErr.HasErrors() {
-		errs := monsterIdErr.Concat(hunterIdErr)
+		errs := monsterIdErr.Concat(*hunterIdErr)
 		helpers.Response(c, nil, &errs)
 	} else {
 		result, err := hunter.GetMaterialFromMonsterUseCase(hunterId, monsterId)
