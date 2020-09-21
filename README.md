@@ -1,7 +1,7 @@
-# DDD on Golang
-- [yu-croco/ddd_on_scala](https://github.com/yu-croco/ddd_on_scala) のGolangバージョン
+# DDD on Golang Sample
+- [yu-croco/ddd_on_scala_sample](https://github.com/yu-croco/ddd_on_scala_sample) のGolangバージョン
 - Golang（Gin）を使い、なんちゃってモンハンの世界をDomain-Driven Designで実装している
-- アーキテクチャとしてのサンプルのため、ORM(Gorm)の使い方は割と適当にしている
+- アーキテクチャとしてのサンプルのため、ORM(Gorm)の使い方は割と適当...
 
 ## 技術スタック
 - Golang: v1.15
@@ -43,8 +43,9 @@
 ├── query // query processor
 │   ├── hunterQuery.go
 │   └── monsterQuery.go
-└── usecase
-    └── hunter
+└── usecase // usecase(application)
+    ├── hunter
+    └── monster
 ```
 
 ## ドメインモデル図
