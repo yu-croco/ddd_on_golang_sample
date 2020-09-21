@@ -25,7 +25,7 @@ func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.
 	damagedMonster, attackErr := hunter.Attack(monster, hunterAttackDamage)
 
 	if attackErr.HasErrors() {
-		return nil, &attackErr
+		return nil, attackErr
 	}
 
 	updatedMonster, updateErr := monsterRepository.Update(damagedMonster)

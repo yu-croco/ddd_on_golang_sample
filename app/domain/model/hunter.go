@@ -33,8 +33,8 @@ func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, errors.AppError) {
 	return hunter, err
 }
 
-func (hunter *Hunter) GetMonsterMaterial(monster Monster) (*MonsterMaterial, errors.AppError) {
+func (hunter *Hunter) GetMonsterMaterial(monster *Monster) (*MonsterMaterial, *errors.AppError) {
 	result, err := monster.TakenMaterial()
 
-	return result, err
+	return result, &err
 }
