@@ -5,31 +5,13 @@ import (
 )
 
 type Monster struct {
-	Id           MonsterId `json:monsterId`
-	Name         string    `json:monsterName`
-	Life         int       `json:life`
-	DefencePower int       `json:defencePower`
-	OffensePower int       `json:offensePower`
+	Id           int    `json:monsterId`
+	Name         string `json:monsterName`
+	Life         int    `json:life`
+	DefencePower int    `json:defencePower`
+	OffensePower int    `json:offensePower`
 	Materials    []MonsterMaterial
 	AttackDamage int `json:attackDamage`
-}
-
-type MonsterId int
-
-func (id MonsterId) ToInt() int {
-	return int(id)
-}
-
-func NewMonsterId(value int) (MonsterId, *errors.AppError) {
-	var monsterId MonsterId
-	var err errors.AppError
-
-	if value <= 0 {
-		err = errors.NewAppError("monsterIdは1以上の数字で指定してください")
-	}
-	monsterId = MonsterId(value)
-
-	return monsterId, &err
 }
 
 func (monster *Monster) Attack(hunter *Hunter, damage int) (*Hunter, *errors.AppError) {

@@ -14,13 +14,13 @@ func NewHunterRepositoryImpl() repository.HunterRepository {
 	return &HunterRepositoryImpl{}
 }
 
-func (repositoryImpl *HunterRepositoryImpl) FindById(id model.HunterId) (*model.Hunter, *errors.AppError) {
+func (repositoryImpl *HunterRepositoryImpl) FindById(id int) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	hunterDao := dao.Hunter{}
 
 	if db.Find(&hunterDao, dao.Hunter{ID: uint(id)}).RecordNotFound() {
-		err = notFoundHunterError(id.ToInt())
+		err = notFoundHunterError(id)
 		return nil, &err
 	}
 
@@ -33,7 +33,7 @@ func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model
 	hunterDao := dao.Hunter{}
 
 	if db.First(&hunterDao, dao.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
-		err = notFoundHunterError(hunter.Id.ToInt())
+		err = notFoundHunterError(hunter.Id)
 		return nil, &err
 	}
 
@@ -49,7 +49,7 @@ func (repositoryImpl *HunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hun
 	hunterDao := dao.Hunter{}
 
 	if db.First(&hunterDao, dao.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
-		err = notFoundHunterError(hunter.Id.ToInt())
+		err = notFoundHunterError(hunter.Id)
 		return &err
 	}
 

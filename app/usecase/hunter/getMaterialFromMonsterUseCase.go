@@ -5,7 +5,7 @@ import (
 	"yu-croco/ddd_on_golang/app/errors"
 )
 
-func GetMaterialFromMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId) (*model.MonsterMaterial, *errors.AppError) {
+func GetMaterialFromMonsterUseCase(hunterId int, monsterId int) (*model.MonsterMaterial, *errors.AppError) {
 	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr

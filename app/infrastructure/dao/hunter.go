@@ -15,7 +15,7 @@ type Hunters []Hunter
 
 func (h *Hunter) ConvertToModel() *model.Hunter {
 	return &model.Hunter{
-		Id:              model.HunterId(h.ID),
+		Id:              int(h.ID),
 		Name:            h.Name,
 		Life:            h.Life,
 		DefencePower:    h.DefencePower,
@@ -30,7 +30,7 @@ func (hunters Hunters) ConvertToModel() *[]model.Hunter {
 
 	for idx, hunter := range hunters {
 		hunterModel := model.Hunter{
-			Id:              model.HunterId(hunter.ID),
+			Id:              int(hunter.ID),
 			Name:            hunter.Name,
 			Life:            hunter.Life,
 			DefencePower:    hunter.DefencePower,

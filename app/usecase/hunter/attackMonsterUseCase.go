@@ -10,7 +10,7 @@ import (
 var hunterRepository = repositoryImpl.NewHunterRepositoryImpl()
 var monsterRepository = repositoryImpl.NewMonsterRepositoryImpl()
 
-func AttackMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId) (*model.Monster, *errors.AppError) {
+func AttackMonsterUseCase(hunterId int, monsterId int) (*model.Monster, *errors.AppError) {
 	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr
