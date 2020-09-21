@@ -27,7 +27,7 @@ func (appErr *AppError) HasErrors() bool {
 	return len(appErr.Errors) >= 1
 }
 
-func (appErr *AppError) Concat(other AppError) AppError {
+func (appErr *AppError) Concat(other *AppError) AppError {
 	if other.Errors == nil {
 		return *appErr
 	}
