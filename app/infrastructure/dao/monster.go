@@ -43,10 +43,22 @@ func (monsters Monsters) ConvertToModel() *[]model.Monster {
 			Life:         monster.Life,
 			DefencePower: monster.DefencePower,
 			OffensePower: monster.OffensePower,
-			Materials:    []model.MonsterMaterial{},
+			Materials:    convertMonsterMaterialRowToModel(monster),
 			AttackDamage: 0,
 		}
 		monsterModels[idx] = model
 	}
 	return &monsterModels
+}
+
+func convertMonsterMaterialRowToModel(monster Monster) []model.MonsterMaterial {
+	materials := make([]model.MonsterMaterial, len(monster.Materials))
+	for idx2, material := range monster.Materials {
+		materials[idx2] = model.MonsterMaterial{
+			Name:   material.Name,
+			Rarity: material.Rarity,
+		}
+	}
+
+	return materials
 }

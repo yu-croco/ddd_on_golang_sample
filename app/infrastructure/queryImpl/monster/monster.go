@@ -17,7 +17,7 @@ func (repo MonsterQueryImpl) FindAll() *[]model.Monster {
 	db := infrastructure.GetDB()
 	monsterDaos := dao.Monsters{}
 
-	db.Find(&monsterDaos)
+	db.Preload("Materials").Find(&monsterDaos)
 
 	return monsterDaos.ConvertToModel()
 }
