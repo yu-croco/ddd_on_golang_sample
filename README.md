@@ -3,6 +3,7 @@
 
 - [yu-croco/ddd_on_scala](https://github.com/yu-croco/ddd_on_scala) のGolangバージョン
 - Golang（Gin）を使い、なんちゃってモンハンの世界をDomain-Driven Designで実装している
+- アーキテクチャとしてのサンプルのため、ORM(Gorm)の使い方は割と適当にしている
 
 ## 技術スタック
 - Golang: v1.15
