@@ -20,10 +20,10 @@ func main() {
 		hunters.GET("/", huntersCtrl.Index)
 
 		hunterAttackCtrl := hunter.HunterAttackController{}
-		hunters.PUT("/:id/attack", hunterAttackCtrl.Put)
+		hunters.PUT("/:id/attack", hunterAttackCtrl.Update)
 
 		hunterGetMaterialCtrl := hunter.HunterGetMatrialController{}
-		hunters.POST("/:id/get_material_from_monster", hunterGetMaterialCtrl.Put)
+		hunters.POST("/:id/get_material_from_monster", hunterGetMaterialCtrl.Update)
 	}
 
 	monsters := r.Group("/monsters")
@@ -33,7 +33,7 @@ func main() {
 		monsters.GET("/", monsterCtrl.Index)
 
 		monsterAttackCtrl := monster.MonsterAttackController{}
-		monsters.PUT("/:id/attack", monsterAttackCtrl.Put)
+		monsters.PUT("/:id/attack", monsterAttackCtrl.Update)
 	}
 
 	r.Run()

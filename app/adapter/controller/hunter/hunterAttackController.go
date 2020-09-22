@@ -9,7 +9,7 @@ import (
 
 type HunterAttackController struct{}
 
-func (ctrl HunterAttackController) Put(c *gin.Context) {
+func (ctrl HunterAttackController) Update(c *gin.Context) {
 	var monster model.Monster
 	c.BindJSON(&monster)
 

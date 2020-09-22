@@ -9,7 +9,7 @@ import (
 
 type MonsterAttackController struct{}
 
-func (ctrl MonsterAttackController) Put(c *gin.Context) {
+func (ctrl MonsterAttackController) Update(c *gin.Context) {
 	var hunter model.Hunter
 	c.BindJSON(&hunter)
 	monsterId := helpers.ConvertToInt(c.Param("id"))
