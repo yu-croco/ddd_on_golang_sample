@@ -15,18 +15,25 @@ func main() {
 
 	hunters := r.Group("/hunters")
 	{
-		ctrl := hunter.Controller{}
-		hunters.GET("/:id", ctrl.Show)
-		hunters.GET("/", ctrl.Index)
-		hunters.PUT("/:id/attack", ctrl.Attack)
-		hunters.POST("/:id/get_material_from_monster", ctrl.GetMaterial)
+		huntersCtrl := hunter.HuntersController{}
+		hunters.GET("/:id", huntersCtrl.Show)
+		hunters.GET("/", huntersCtrl.Index)
+
+		hunterAttackCtrl := hunter.HunterAttackController{}
+		hunters.PUT("/:id/attack", hunterAttackCtrl.Put)
+
+		hunterGetMaterialCtrl := hunter.HunterGetMatrialController{}
+		hunters.POST("/:id/get_material_from_monster", hunterGetMaterialCtrl.Put)
 	}
+
 	monsters := r.Group("/monsters")
 	{
-		ctrl := monster.Controller{}
-		monsters.GET("/:id", ctrl.Show)
-		monsters.GET("/", ctrl.Index)
-		monsters.PUT("/:id/attack", ctrl.Attack)
+		monsterCtrl := monster.Controller{}
+		monsters.GET("/:id", monsterCtrl.Show)
+		monsters.GET("/", monsterCtrl.Index)
+
+		monsterAttackCtrl := monster.MonsterAttackController{}
+		monsters.PUT("/:id/attack", monsterAttackCtrl.Put)
 	}
 
 	r.Run()
