@@ -4,8 +4,7 @@ import (
 	"errors"
 )
 
-// Note: 各層でのエラーハンドラーを作ると、層ごとで型が生まれてどこで変換するか面倒なので
-//共通のエラー型を用意
+// Note: 各層でのエラーハンドラーを作ると、層ごとで型が生まれてどこで変換するか面倒なので共通のエラー型を用意
 
 type AppError struct {
 	Errors []string `json:"errors"`

@@ -5,5 +5,5 @@ import (
 )
 
 type MonsterQuery interface {
-	FindAll() *[]model.Monster
+	FindAll() *model.Monsters
 }

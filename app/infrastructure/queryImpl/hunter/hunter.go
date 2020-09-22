@@ -13,7 +13,7 @@ func NewHunterQueryImpl() query.HunterQuery {
 	return &HunterQueryImpl{}
 }
 
-func (repo HunterQueryImpl) FindAll() *[]model.Hunter {
+func (repo HunterQueryImpl) FindAll() *model.Hunters {
 	db := infrastructure.GetDB()
 	hunterDaos := dao.Hunters{}
 

@@ -2,7 +2,7 @@ package seeds
 
 import "yu-croco/ddd_on_golang/app/infrastructure/dao"
 
-var materials = []dao.MonsterMaterial{
+var materials = dao.MonsterMaterials{
 	{
 		ID:     1,
 		Name:   "ランポスの皮",
@@ -15,7 +15,7 @@ var materials = []dao.MonsterMaterial{
 	},
 }
 
-var materials2 = []dao.MonsterMaterial{
+var materials2 = dao.MonsterMaterials{
 	{
 		ID:     3,
 		Name:   "アルビノの皮",
@@ -52,7 +52,7 @@ var HunterSeed = dao.Hunter{
 	Life:            150,
 	DefencePower:    100,
 	OffensePower:    110,
-	HuntedMaterials: []dao.MonsterMaterial{},
+	HuntedMaterials: dao.MonsterMaterials{},
 }
 
 var HunterSeed2 = dao.Hunter{

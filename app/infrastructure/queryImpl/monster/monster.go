@@ -13,7 +13,7 @@ func NewMonsterQueryImpl() query.MonsterQuery {
 	return &MonsterQueryImpl{}
 }
 
-func (repo MonsterQueryImpl) FindAll() *[]model.Monster {
+func (repo MonsterQueryImpl) FindAll() *model.Monsters {
 	db := infrastructure.GetDB()
 	monsterDaos := dao.Monsters{}
 

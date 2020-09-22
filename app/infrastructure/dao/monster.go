@@ -8,13 +8,13 @@ type Monster struct {
 	Life         int
 	DefencePower int
 	OffensePower int
-	Materials    []MonsterMaterial
+	Materials    MonsterMaterials
 }
 
 type Monsters []Monster
 
 func (m *Monster) ConvertToModel() *model.Monster {
-	var materials = make([]model.MonsterMaterial, len(m.Materials))
+	var materials = make(model.MonsterMaterials, len(m.Materials))
 	for idx, material := range m.Materials {
 		materials[idx] = model.MonsterMaterial{
 			Name:   material.Name,
@@ -33,8 +33,8 @@ func (m *Monster) ConvertToModel() *model.Monster {
 	}
 }
 
-func (monsters Monsters) ConvertToModel() *[]model.Monster {
-	monsterModels := make([]model.Monster, len(monsters))
+func (monsters Monsters) ConvertToModel() *model.Monsters {
+	monsterModels := make(model.Monsters, len(monsters))
 
 	for idx, monster := range monsters {
 		model := model.Monster{
@@ -51,8 +51,8 @@ func (monsters Monsters) ConvertToModel() *[]model.Monster {
 	return &monsterModels
 }
 
-func convertMonsterMaterialRowToModel(monster Monster) []model.MonsterMaterial {
-	materials := make([]model.MonsterMaterial, len(monster.Materials))
+func convertMonsterMaterialRowToModel(monster Monster) model.MonsterMaterials {
+	materials := make(model.MonsterMaterials, len(monster.Materials))
 	for idx2, material := range monster.Materials {
 		materials[idx2] = model.MonsterMaterial{
 			Name:   material.Name,

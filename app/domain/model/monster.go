@@ -10,9 +10,11 @@ type Monster struct {
 	Life         int    `json:"life"`
 	DefencePower int    `json:"defencePower"`
 	OffensePower int    `json:"offensePower"`
-	Materials    []MonsterMaterial
+	Materials    MonsterMaterials
 	AttackDamage int `json:"attackDamage"`
 }
+
+type Monsters []Monster
 
 func (monster *Monster) Attack(hunter *Hunter, damage int) (*Hunter, *errors.AppError) {
 	return hunter.AttackedBy(damage)
