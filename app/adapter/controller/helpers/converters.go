@@ -6,6 +6,7 @@ import (
 	"yu-croco/ddd_on_golang/app/errors"
 )
 
+// Note: 型はAPI仕様レベルで担保するので、ここではチェックしない
 func ConvertToInt(modelId string) int {
 	id, _ := strconv.Atoi(modelId)
 	return id
