@@ -1,9 +1,5 @@
 package errors
 
-import (
-	"errors"
-)
-
 // Note: 各層でのエラーハンドラーを作ると、層ごとで型が生まれてどこで変換するか面倒なので共通のエラー型を用意
 
 type AppError struct {
@@ -11,10 +7,8 @@ type AppError struct {
 }
 
 func NewAppError(message string) AppError {
-	var errorResult []string
-
-	err := errors.New(message)
-	errorResult = append(errorResult, err.Error())
+	errorResult := make([]string, 1)
+	errorResult[0] = message
 
 	return AppError{Errors: errorResult}
 }
