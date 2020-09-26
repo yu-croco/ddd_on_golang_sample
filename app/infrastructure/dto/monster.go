@@ -17,19 +17,19 @@ func (m *Monster) ConvertToModel() *model.Monster {
 	var materials = make(model.MonsterMaterials, len(m.Materials))
 	for idx, material := range m.Materials {
 		materials[idx] = model.MonsterMaterial{
-			Name:   material.Name,
-			Rarity: material.Rarity,
+			Name:   model.MonsterMaterialName(material.Name),
+			Rarity: model.MonsterMaterialRarity(material.Rarity),
 		}
 	}
 
 	return &model.Monster{
-		Id:           int(m.ID),
-		Name:         m.Name,
-		Life:         m.Life,
-		DefencePower: m.DefencePower,
-		OffensePower: m.OffensePower,
+		Id:           model.MonsterId(m.ID),
+		Name:         model.MonsterName(m.Name),
+		Life:         model.MonsterLife(m.Life),
+		DefencePower: model.MonsterDefencePower(m.DefencePower),
+		OffensePower: model.MonsterOffensePower(m.OffensePower),
 		Materials:    materials,
-		AttackDamage: 0,
+		AttackDamage: model.MonsterAttackDamage(0),
 	}
 }
 
@@ -38,13 +38,13 @@ func (monsters Monsters) ConvertToModel() *model.Monsters {
 
 	for idx, monster := range monsters {
 		model := model.Monster{
-			Id:           int(monster.ID),
-			Name:         monster.Name,
-			Life:         monster.Life,
-			DefencePower: monster.DefencePower,
-			OffensePower: monster.OffensePower,
+			Id:           model.MonsterId(monster.ID),
+			Name:         model.MonsterName(monster.Name),
+			Life:         model.MonsterLife(monster.Life),
+			DefencePower: model.MonsterDefencePower(monster.DefencePower),
+			OffensePower: model.MonsterOffensePower(monster.OffensePower),
 			Materials:    convertMonsterMaterialRowToModel(monster),
-			AttackDamage: 0,
+			AttackDamage: model.MonsterAttackDamage(0),
 		}
 		monsterModels[idx] = model
 	}
@@ -55,8 +55,8 @@ func convertMonsterMaterialRowToModel(monster Monster) model.MonsterMaterials {
 	materials := make(model.MonsterMaterials, len(monster.Materials))
 	for idx2, material := range monster.Materials {
 		materials[idx2] = model.MonsterMaterial{
-			Name:   material.Name,
-			Rarity: material.Rarity,
+			Name:   model.MonsterMaterialName(material.Name),
+			Rarity: model.MonsterMaterialRarity(material.Rarity),
 		}
 	}
 

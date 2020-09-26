@@ -17,13 +17,13 @@ type Hunters []Hunter
 
 func (h *Hunter) ConvertToModel() *model.Hunter {
 	return &model.Hunter{
-		Id:              int(h.ID),
-		Name:            h.Name,
-		Life:            h.Life,
-		DefencePower:    h.DefencePower,
-		OffensePower:    h.OffensePower,
+		Id:              model.HunterId(h.ID),
+		Name:            model.HunterName(h.Name),
+		Life:            model.HunterLife(h.Life),
+		DefencePower:    model.HunterDefencePower(h.DefencePower),
+		OffensePower:    model.HunterOffensePower(h.OffensePower),
 		HuntedMaterials: model.HuntedMonsterMaterials{},
-		AttackDamage:    0,
+		AttackDamage:    model.HunterAttackDamage(0),
 	}
 }
 
@@ -32,13 +32,13 @@ func (hunters Hunters) ConvertToModel() *model.Hunters {
 
 	for idx, hunter := range hunters {
 		hunterModel := model.Hunter{
-			Id:              int(hunter.ID),
-			Name:            hunter.Name,
-			Life:            hunter.Life,
-			DefencePower:    hunter.DefencePower,
-			OffensePower:    hunter.OffensePower,
+			Id:              model.HunterId(hunter.ID),
+			Name:            model.HunterName(hunter.Name),
+			Life:            model.HunterLife(hunter.Life),
+			DefencePower:    model.HunterDefencePower(hunter.DefencePower),
+			OffensePower:    model.HunterOffensePower(hunter.OffensePower),
 			HuntedMaterials: convertMaterialRowToModel(hunter),
-			AttackDamage:    0,
+			AttackDamage:    model.HunterAttackDamage(0),
 		}
 		result[idx] = hunterModel
 	}
@@ -50,8 +50,8 @@ func convertMaterialRowToModel(hunter Hunter) model.HuntedMonsterMaterials {
 	materials := make(model.HuntedMonsterMaterials, len(hunter.HuntedMaterials))
 	for idx2, material := range hunter.HuntedMaterials {
 		materials[idx2] = model.HuntedMonsterMaterial{
-			Name:   material.Name,
-			Rarity: material.Rarity,
+			Name:   model.HuntedMonsterMaterialName(material.Name),
+			Rarity: model.HuntedMonsterMaterialRarity(material.Rarity),
 		}
 	}
 

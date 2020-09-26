@@ -14,7 +14,7 @@ func NewHunterRepositoryImpl() repository.HunterRepository {
 	return &HunterRepositoryImpl{}
 }
 
-func (repositoryImpl *HunterRepositoryImpl) FindById(id int) (*model.Hunter, *errors.AppError) {
+func (repositoryImpl *HunterRepositoryImpl) FindById(id model.HunterId) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	hunterDao := dto.Hunter{}
@@ -33,11 +33,11 @@ func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model
 	hunterDao := dto.Hunter{}
 
 	if db.First(&hunterDao, dto.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
-		err = notFoundHunterError(int(hunter.Id))
+		err = notFoundHunterError(hunter.Id)
 		return nil, &err
 	}
 
-	hunterDao.Life = hunter.Life
+	hunterDao.Life = int(hunter.Life)
 	db.Save(&hunterDao)
 
 	return hunterDao.ConvertToModel(), nil
@@ -54,8 +54,8 @@ func (repositoryImpl *HunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hun
 	}
 
 	var materialDao dto.MonsterMaterial
-	if db.First(&materialDao, dto.MonsterMaterial{Name: material.Name}).RecordNotFound() {
-		err = notFoundMaterialError(material.Name)
+	if db.First(&materialDao, dto.MonsterMaterial{Name: string(material.Name)}).RecordNotFound() {
+		err = notFoundMaterialError(string(material.Name))
 		return &err
 	}
 
@@ -65,7 +65,7 @@ func (repositoryImpl *HunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hun
 	return nil
 }
 
-func notFoundHunterError(id int) errors.AppError {
+func notFoundHunterError(id model.HunterId) errors.AppError {
 	return errors.NewAppError("id " + string(id) + "のhunterは見つかりませんでした")
 }
 

@@ -3,6 +3,7 @@ package hunter
 import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
+	"yu-croco/ddd_on_golang/app/domain/model"
 	queryImpl "yu-croco/ddd_on_golang/app/infrastructure/queryImpl/hunter"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
@@ -10,7 +11,7 @@ import (
 type HuntersController struct{}
 
 func (ctrl HuntersController) Show(c *gin.Context) {
-	hunterId := helpers.ConvertToInt(c.Param("id"))
+	hunterId := model.HunterId(helpers.ConvertToInt(c.Param("id")))
 
 	repo := repositoryImpl.NewHunterRepositoryImpl()
 	result, errs := repo.FindById(hunterId)

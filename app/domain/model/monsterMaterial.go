@@ -1,8 +1,11 @@
 package model
 
 type MonsterMaterial struct {
-	Name   string `json:"name"`
-	Rarity int    `json:"rarity"`
+	Name   MonsterMaterialName   `json:"name"`
+	Rarity MonsterMaterialRarity `json:"rarity"`
 }
+
+type MonsterMaterialName string
+type MonsterMaterialRarity int
 
 type MonsterMaterials []MonsterMaterial

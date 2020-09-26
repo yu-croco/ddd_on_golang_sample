@@ -3,6 +3,7 @@ package monster
 import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
+	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure/queryImpl/monster"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
@@ -10,7 +11,7 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	monsterId := helpers.ConvertToInt(c.Param("id"))
+	monsterId := model.MonsterId(helpers.ConvertToInt(c.Param("id")))
 
 	repo := repositoryImpl.NewMonsterRepositoryImpl()
 	result, errs := repo.FindById(monsterId)

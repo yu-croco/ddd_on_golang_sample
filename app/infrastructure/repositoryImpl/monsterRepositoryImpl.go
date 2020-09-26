@@ -14,7 +14,7 @@ func NewMonsterRepositoryImpl() repository.MonsterRepository {
 	return &MonsterRepositoryImpl{}
 }
 
-func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *errors.AppError) {
+func (repositoryImpl *MonsterRepositoryImpl) FindById(id model.MonsterId) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	monsterDao := dto.Monster{}
@@ -37,12 +37,12 @@ func (repositoryImpl *MonsterRepositoryImpl) Update(monster *model.Monster) (*mo
 		return nil, &err
 	}
 
-	monsterDao.Life = monster.Life
+	monsterDao.Life = int(monster.Life)
 
 	db.Save(&monsterDao)
 	return monsterDao.ConvertToModel(), nil
 }
 
-func notFoundMonsterError(id int) errors.AppError {
+func notFoundMonsterError(id model.MonsterId) errors.AppError {
 	return errors.NewAppError("id " + string(id) + "のmonsterは見つかりませんでした")
 }

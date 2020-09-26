@@ -5,31 +5,38 @@ import (
 )
 
 type Hunter struct {
-	Id              int    `json:"hunterId"`
-	Name            string `json:"hunterName"`
-	Life            int    `json:"life"`
-	DefencePower    int    `json:"defencePower"`
-	OffensePower    int    `json:"offensePower"`
+	Id              HunterId           `json:"hunterId"`
+	Name            HunterName         `json:"hunterName"`
+	Life            HunterLife         `json:"life"`
+	DefencePower    HunterDefencePower `json:"defencePower"`
+	OffensePower    HunterOffensePower `json:"offensePower"`
 	HuntedMaterials HuntedMonsterMaterials
-	AttackDamage    int `json:"attackDamage"`
+	AttackDamage    HunterAttackDamage `json:"attackDamage"`
 }
+
+type HunterId int
+type HunterName string
+type HunterLife int
+type HunterDefencePower int
+type HunterOffensePower int
+type HunterAttackDamage int
 
 type Hunters []Hunter
 
-func (hunter *Hunter) Attack(monster *Monster, damage int) (*Monster, *errors.AppError) {
+func (hunter *Hunter) Attack(monster *Monster, damage HunterOffensePower) (*Monster, *errors.AppError) {
 	return monster.AttackedBy(damage)
 }
 
-func (hunter *Hunter) AttackedBy(givenDamage int) (*Hunter, *errors.AppError) {
+func (hunter *Hunter) AttackedBy(givenDamage MonsterOffensePower) (*Hunter, *errors.AppError) {
 	var err errors.AppError
-	diff := hunter.Life - givenDamage
+	diff := int(hunter.Life) - int(givenDamage)
 
 	if hunter.Life == 0 {
 		err = errors.NewAppError("ハンターは既に倒れています")
 	} else if diff >= 0 {
-		hunter.Life = diff
+		hunter.Life = HunterLife(diff)
 	} else {
-		hunter.Life = 0
+		hunter.Life = HunterLife(0)
 	}
 
 	return hunter, &err
