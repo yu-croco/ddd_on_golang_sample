@@ -5,7 +5,7 @@ import (
 	"yu-croco/ddd_on_golang/app/domain/repository"
 	"yu-croco/ddd_on_golang/app/errors"
 	"yu-croco/ddd_on_golang/app/infrastructure"
-	"yu-croco/ddd_on_golang/app/infrastructure/dao"
+	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 )
 
 type MonsterRepositoryImpl struct{}
@@ -17,9 +17,9 @@ func NewMonsterRepositoryImpl() repository.MonsterRepository {
 func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
-	monsterDao := dao.Monster{}
+	monsterDao := dto.Monster{}
 
-	if db.Preload("Materials").First(&monsterDao, dao.Monster{ID: uint(id)}).RecordNotFound() {
+	if db.Preload("Materials").First(&monsterDao, dto.Monster{ID: uint(id)}).RecordNotFound() {
 		err = notFoundMonsterError(id)
 		return nil, &err
 	}
@@ -30,9 +30,9 @@ func (repositoryImpl *MonsterRepositoryImpl) FindById(id int) (*model.Monster, *
 func (repositoryImpl *MonsterRepositoryImpl) Update(monster *model.Monster) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
-	monsterDao := dao.Monster{}
+	monsterDao := dto.Monster{}
 
-	if db.First(&monsterDao, dao.Monster{ID: uint(monster.Id)}).RecordNotFound() {
+	if db.First(&monsterDao, dto.Monster{ID: uint(monster.Id)}).RecordNotFound() {
 		err = notFoundMonsterError(monster.Id)
 		return nil, &err
 	}

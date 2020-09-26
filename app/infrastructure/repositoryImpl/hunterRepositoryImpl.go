@@ -5,7 +5,7 @@ import (
 	"yu-croco/ddd_on_golang/app/domain/repository"
 	"yu-croco/ddd_on_golang/app/errors"
 	"yu-croco/ddd_on_golang/app/infrastructure"
-	"yu-croco/ddd_on_golang/app/infrastructure/dao"
+	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 )
 
 type HunterRepositoryImpl struct{}
@@ -17,9 +17,9 @@ func NewHunterRepositoryImpl() repository.HunterRepository {
 func (repositoryImpl *HunterRepositoryImpl) FindById(id int) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
-	hunterDao := dao.Hunter{}
+	hunterDao := dto.Hunter{}
 
-	if db.Find(&hunterDao, dao.Hunter{ID: uint(id)}).RecordNotFound() {
+	if db.Find(&hunterDao, dto.Hunter{ID: uint(id)}).RecordNotFound() {
 		err = notFoundHunterError(id)
 		return nil, &err
 	}
@@ -30,9 +30,9 @@ func (repositoryImpl *HunterRepositoryImpl) FindById(id int) (*model.Hunter, *er
 func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
-	hunterDao := dao.Hunter{}
+	hunterDao := dto.Hunter{}
 
-	if db.First(&hunterDao, dao.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
+	if db.First(&hunterDao, dto.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
 		err = notFoundHunterError(int(hunter.Id))
 		return nil, &err
 	}
@@ -46,15 +46,15 @@ func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model
 func (repositoryImpl *HunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hunter, material *model.MonsterMaterial) *errors.AppError {
 	db := infrastructure.GetDB()
 	var err errors.AppError
-	hunterDao := dao.Hunter{}
+	hunterDao := dto.Hunter{}
 
-	if db.First(&hunterDao, dao.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
+	if db.First(&hunterDao, dto.Hunter{ID: uint(hunter.Id)}).RecordNotFound() {
 		err = notFoundHunterError(hunter.Id)
 		return &err
 	}
 
-	var materialDao dao.MonsterMaterial
-	if db.First(&materialDao, dao.MonsterMaterial{Name: material.Name}).RecordNotFound() {
+	var materialDao dto.MonsterMaterial
+	if db.First(&materialDao, dto.MonsterMaterial{Name: material.Name}).RecordNotFound() {
 		err = notFoundMaterialError(material.Name)
 		return &err
 	}

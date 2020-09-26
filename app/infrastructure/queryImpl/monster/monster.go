@@ -3,7 +3,7 @@ package monster
 import (
 	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure"
-	"yu-croco/ddd_on_golang/app/infrastructure/dao"
+	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 	"yu-croco/ddd_on_golang/app/query"
 )
 
@@ -15,7 +15,7 @@ func NewMonsterQueryImpl() query.MonsterQuery {
 
 func (repo MonsterQueryImpl) FindAll() *model.Monsters {
 	db := infrastructure.GetDB()
-	monsterDaos := dao.Monsters{}
+	monsterDaos := dto.Monsters{}
 
 	db.Preload("Materials").Find(&monsterDaos)
 

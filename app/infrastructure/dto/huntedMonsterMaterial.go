@@ -1,4 +1,4 @@
-package dao
+package dto
 
 type HuntedMonsterMaterial struct {
 	ID                uint            `json:"id" binding:"required"`

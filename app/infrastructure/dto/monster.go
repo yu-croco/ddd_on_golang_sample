@@ -1,4 +1,4 @@
-package dao
+package dto
 
 import "yu-croco/ddd_on_golang/app/domain/model"
 

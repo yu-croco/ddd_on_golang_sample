@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	"yu-croco/ddd_on_golang/app/infrastructure/dao"
+	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 	"yu-croco/ddd_on_golang/app/infrastructure/seeds"
 )
 
@@ -39,10 +39,10 @@ func Close() {
 
 func autoMigrate() {
 	db.
-		AutoMigrate(&dao.Monster{}).
-		AutoMigrate(&dao.MonsterMaterial{}).
-		AutoMigrate(&dao.Hunter{}).
-		AutoMigrate(&dao.HuntedMonsterMaterial{})
+		AutoMigrate(&dto.Monster{}).
+		AutoMigrate(&dto.MonsterMaterial{}).
+		AutoMigrate(&dto.Hunter{}).
+		AutoMigrate(&dto.HuntedMonsterMaterial{})
 }
 
 func execSeeds() {

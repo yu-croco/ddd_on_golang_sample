@@ -1,8 +1,8 @@
 package seeds
 
-import "yu-croco/ddd_on_golang/app/infrastructure/dao"
+import "yu-croco/ddd_on_golang/app/infrastructure/dto"
 
-var materials = dao.MonsterMaterials{
+var materials = dto.MonsterMaterials{
 	{
 		ID:     1,
 		Name:   "ランポスの皮",
@@ -15,7 +15,7 @@ var materials = dao.MonsterMaterials{
 	},
 }
 
-var materials2 = dao.MonsterMaterials{
+var materials2 = dto.MonsterMaterials{
 	{
 		ID:     3,
 		Name:   "アルビノの皮",
@@ -28,7 +28,7 @@ var materials2 = dao.MonsterMaterials{
 	},
 }
 
-var MonsterSeed = dao.Monster{
+var MonsterSeed = dto.Monster{
 	ID:           1,
 	Name:         "ランポス",
 	Life:         150,
@@ -37,7 +37,7 @@ var MonsterSeed = dao.Monster{
 	Materials:    materials,
 }
 
-var MonsterSeed2 = dao.Monster{
+var MonsterSeed2 = dto.Monster{
 	ID:           2,
 	Name:         "フルフル",
 	Life:         2300,
@@ -46,16 +46,16 @@ var MonsterSeed2 = dao.Monster{
 	Materials:    materials2,
 }
 
-var HunterSeed = dao.Hunter{
+var HunterSeed = dto.Hunter{
 	ID:              1,
 	Name:            "新米ハンター",
 	Life:            150,
 	DefencePower:    100,
 	OffensePower:    110,
-	HuntedMaterials: dao.MonsterMaterials{},
+	HuntedMaterials: dto.MonsterMaterials{},
 }
 
-var HunterSeed2 = dao.Hunter{
+var HunterSeed2 = dto.Hunter{
 	ID:              2,
 	Name:            "中級ハンター",
 	Life:            450,
