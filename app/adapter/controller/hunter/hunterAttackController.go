@@ -13,8 +13,11 @@ func (ctrl HunterAttackController) Update(c *gin.Context) {
 	var monster model.Monster
 	c.BindJSON(&monster)
 
-	hunterId := model.HunterId(helpers.ConvertToInt(c.Param("id")))
-	result, errs := hunter.AttackMonsterUseCase(hunterId, monster.Id)
-
-	helpers.Response(c, result, errs)
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	} else {
+		result, errs := hunter.AttackMonsterUseCase(*hunterId, monster.Id)
+		helpers.Response(c, result, errs)
+	}
 }

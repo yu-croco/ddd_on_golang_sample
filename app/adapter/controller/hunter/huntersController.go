@@ -11,12 +11,15 @@ import (
 type HuntersController struct{}
 
 func (ctrl HuntersController) Show(c *gin.Context) {
-	hunterId := model.HunterId(helpers.ConvertToInt(c.Param("id")))
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
 
-	repo := repositoryImpl.NewHunterRepositoryImpl()
-	result, errs := repo.FindById(hunterId)
-
-	helpers.Response(c, result, errs)
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	} else {
+		repo := repositoryImpl.NewHunterRepositoryImpl()
+		result, errs := repo.FindById(*hunterId)
+		helpers.Response(c, result, errs)
+	}
 }
 
 func (ctrl HuntersController) Index(c *gin.Context) {

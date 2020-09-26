@@ -12,9 +12,12 @@ type HunterGetMatrialController struct{}
 func (ctrl HunterGetMatrialController) Update(c *gin.Context) {
 	var monster model.Monster
 	c.BindJSON(&monster)
-	hunterId := model.HunterId(helpers.ConvertToInt(c.Param("id")))
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
 
-	result, errs := hunter.GetMaterialFromMonsterUseCase(hunterId, monster.Id)
-
-	helpers.Response(c, result, errs)
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	} else {
+		result, errs := hunter.GetMaterialFromMonsterUseCase(*hunterId, monster.Id)
+		helpers.Response(c, result, errs)
+	}
 }

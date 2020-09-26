@@ -14,6 +14,17 @@ type Hunter struct {
 	AttackDamage    HunterAttackDamage `json:"attackDamage"`
 }
 
+// 完全コンストラクタのための初期化処理サンプル
+func NewHunterId(id int) (*HunterId, *errors.AppError) {
+	if id <= 0 {
+		err := errors.NewAppError("HunterIdは1以上の値にしてください")
+		return nil, &err
+	}
+
+	hunterId := HunterId(id)
+	return &hunterId, nil
+}
+
 type HunterId int
 type HunterName string
 type HunterLife int
