@@ -11,12 +11,16 @@ import (
 type Controller struct{}
 
 func (ctrl Controller) Show(c *gin.Context) {
-	monsterId := model.MonsterId(helpers.ConvertToInt(c.Param("id")))
+	monsterId, monsterIfErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
 
-	repo := repositoryImpl.NewMonsterRepositoryImpl()
-	result, errs := repo.FindById(monsterId)
+	if monsterIfErr.HasErrors() {
+		helpers.Response(c, nil, monsterIfErr)
+	} else {
+		repo := repositoryImpl.NewMonsterRepositoryImpl()
+		result, errs := repo.FindById(*monsterId)
 
-	helpers.Response(c, result, errs)
+		helpers.Response(c, result, errs)
+	}
 }
 
 func (ctrl Controller) Index(c *gin.Context) {

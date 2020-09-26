@@ -12,9 +12,12 @@ type MonsterAttackController struct{}
 func (ctrl MonsterAttackController) Update(c *gin.Context) {
 	var hunter model.Hunter
 	c.BindJSON(&hunter)
-	monsterId := model.MonsterId(helpers.ConvertToInt(c.Param("id")))
+	monsterId, monsterIdErr := model.NewMonsterId(helpers.ConvertToInt(c.Param("id")))
+	if monsterIdErr.HasErrors() {
+		helpers.Response(c, nil, monsterIdErr)
+	} else {
+		result, errs := usecase.AttackHunterUseCase(*monsterId, hunter.Id)
+		helpers.Response(c, result, errs)
+	}
 
-	result, errs := usecase.AttackHunterUseCase(monsterId, hunter.Id)
-
-	helpers.Response(c, result, errs)
 }

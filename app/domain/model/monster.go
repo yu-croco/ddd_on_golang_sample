@@ -14,6 +14,17 @@ type Monster struct {
 	AttackDamage MonsterAttackDamage `json:"attackDamage"`
 }
 
+// 完全コンストラクタのための初期化処理サンプル
+func NewMonsterId(id int) (*MonsterId, *errors.AppError) {
+	if id <= 0 {
+		err := errors.NewAppError("MonsterIdは1以上の値にしてください")
+		return nil, &err
+	}
+
+	hunterId := MonsterId(id)
+	return &hunterId, nil
+}
+
 type MonsterId int
 type MonsterName string
 type MonsterLife int
