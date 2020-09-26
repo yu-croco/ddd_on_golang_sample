@@ -95,19 +95,42 @@ Golangを用いてDDDをどこまでできたのか（できそうか）をま�
 - パッケージ構成に慣れが必要
     - `import cycle not allowed` で怒られる...
 
-### 悩みどころ
-- Value Objectの作成
-  - 理想としては
-    - Value Objectそれぞれに対してstructを用意しておき、それらを初期擦る際に `NewHoge` という初期化メソッドを使ってバリデーション付きで生成する
-  - 悩みどころ
-    - 記述量が膨れまくる
-    - adapter層に関してはJSONからの変換処理があるので面倒
-        - `c.BindJson(&hoge)` したあとにバリデーション実行は結構面倒そう
-
 ## DDDらしさを引き出すためのTips
+### 完全コンストラクタ
+Value Objectが何らかの存在条件を持っている場合（例えば `UserNameは5文字以上20文字以下のStringであること` など）には条件を満たないValue Objectの生成を防ぐために、Value Objectを生成する際に `必ず成功or失敗のどちらかとなる` ファクトリメソッドを用意すると便利（完全コンストラクタの実現）このレポジトリでは試験的にhunterId/monsterIdにその機能を取り入れた（それら以外のValue Objectは特別な条件を有していないため省略）。
+
+懸念点としては、完全コンストラクタを採用したいオブジェクトが増えると記述するコード量が確実に増えることである。Scalaの型パラメータのように型を抽象化して共通化できないので、基盤の共通化が難しそうである。
+
+```go
+// Domain層で完全コンストラクタのための初期化処理を記述
+func NewHunterId(id int) (*HunterId, *errors.AppError) {
+	if id <= 0 {
+		err := errors.NewAppError("HunterIdは1以上の値にしてください")
+		return nil, &err
+	}
+
+	hunterId := HunterId(id)
+	return &hunterId, nil
+}
+
+// Adapter層で使用する
+func (ctrl HunterAttackController) Update(c *gin.Context) {
+	var monster model.Monster
+	c.BindJSON(&monster)
+
+	hunterId, hunterIdErr := model.NewHunterId(helpers.ConvertToInt(c.Param("id")))
+	if hunterIdErr.HasErrors() {
+		helpers.Response(c, nil, hunterIdErr)
+	} else {
+		result, errs := hunter.AttackMonsterUseCase(*hunterId, monster.Id)
+		helpers.Response(c, result, errs)
+	}
+}
+```
+
 ### interfaceを使ったDI
-インターフェイスと実装を分ける手段として、RepositoryではDIが使用されることが一般的であると思う。
-Golangでは以下のようにインターフェイスとして持たせたい処理をinterfaceに記載し、それをstructに持たせることで実装を強制することができる。
+インターフェイスと実装を分ける手段として、RepositoryではDIコンテナが使用されることが一般的であると思う。GinではDIコンテナが提供されていないので、今回は自作している。
+調べた範囲では以下のようなやり方が一般的のようである。インターフェイスとして持たせたい処理をinterfaceに記載し、それをstructに持たせることで実装を強制することができる。
 
 ```go
 // インターフェイス
