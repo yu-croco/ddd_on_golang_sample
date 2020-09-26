@@ -17,8 +17,26 @@ type Hunter struct {
 type HunterId int
 type HunterName string
 type HunterLife int
+
+func (life HunterLife) Minus(damage MonsterOffensePower) HunterLife {
+	return HunterLife(int(life) - int(damage))
+}
+
 type HunterDefencePower int
+
+func (defence HunterDefencePower) BiggerOrSameThan(offense MonsterOffensePower) bool {
+	return int(defence) >= int(offense)
+}
+
 type HunterOffensePower int
+
+func (offense HunterOffensePower) Twice() HunterOffensePower {
+	return HunterOffensePower(int(offense) * 2)
+}
+func (offense HunterOffensePower) Minus(defence MonsterDefencePower) HunterOffensePower {
+	return HunterOffensePower(int(offense) - int(defence))
+}
+
 type HunterAttackDamage int
 
 type Hunters []Hunter
@@ -29,12 +47,15 @@ func (hunter *Hunter) Attack(monster *Monster, damage HunterOffensePower) (*Mons
 
 func (hunter *Hunter) AttackedBy(givenDamage MonsterOffensePower) (*Hunter, *errors.AppError) {
 	var err errors.AppError
-	diff := int(hunter.Life) - int(givenDamage)
+	diff := hunter.Life.Minus(givenDamage)
 
 	if hunter.Life == 0 {
 		err = errors.NewAppError("ハンターは既に倒れています")
-	} else if diff >= 0 {
-		hunter.Life = HunterLife(diff)
+		return nil, &err
+	}
+
+	if diff >= 0 {
+		hunter.Life = diff
 	} else {
 		hunter.Life = HunterLife(0)
 	}
