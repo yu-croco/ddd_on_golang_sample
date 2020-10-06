@@ -7,13 +7,13 @@ import (
 	"yu-croco/ddd_on_golang/app/query"
 )
 
-type MonsterQueryImpl struct{}
+type monsterQueryImpl struct{}
 
 func NewMonsterQueryImpl() query.MonsterQuery {
-	return &MonsterQueryImpl{}
+	return &monsterQueryImpl{}
 }
 
-func (repo MonsterQueryImpl) FindAll() *model.Monsters {
+func (repo monsterQueryImpl) FindAll() *model.Monsters {
 	db := infrastructure.GetDB()
 	monsterDaos := dto.Monsters{}
 

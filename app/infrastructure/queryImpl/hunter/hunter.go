@@ -7,13 +7,13 @@ import (
 	"yu-croco/ddd_on_golang/app/query"
 )
 
-type HunterQueryImpl struct{}
+type hunterQueryImpl struct{}
 
 func NewHunterQueryImpl() query.HunterQuery {
-	return &HunterQueryImpl{}
+	return &hunterQueryImpl{}
 }
 
-func (repo HunterQueryImpl) FindAll() *model.Hunters {
+func (repo hunterQueryImpl) FindAll() *model.Hunters {
 	db := infrastructure.GetDB()
 	hunterDaos := dto.Hunters{}
 

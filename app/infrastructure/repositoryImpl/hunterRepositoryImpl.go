@@ -8,13 +8,13 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 )
 
-type HunterRepositoryImpl struct{}
+type hunterRepositoryImpl struct{}
 
 func NewHunterRepositoryImpl() repository.HunterRepository {
-	return &HunterRepositoryImpl{}
+	return &hunterRepositoryImpl{}
 }
 
-func (repositoryImpl *HunterRepositoryImpl) FindById(id model.HunterId) (*model.Hunter, *errors.AppError) {
+func (repositoryImpl *hunterRepositoryImpl) FindById(id model.HunterId) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	hunterDao := dto.Hunter{}
@@ -27,7 +27,7 @@ func (repositoryImpl *HunterRepositoryImpl) FindById(id model.HunterId) (*model.
 	return hunterDao.ConvertToModel(), nil
 }
 
-func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model.Hunter, *errors.AppError) {
+func (repositoryImpl *hunterRepositoryImpl) Update(hunter *model.Hunter) (*model.Hunter, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	hunterDao := dto.Hunter{}
@@ -43,7 +43,7 @@ func (repositoryImpl *HunterRepositoryImpl) Update(hunter *model.Hunter) (*model
 	return hunterDao.ConvertToModel(), nil
 }
 
-func (repositoryImpl *HunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hunter, material *model.MonsterMaterial) *errors.AppError {
+func (repositoryImpl *hunterRepositoryImpl) AddMonsterMaterial(hunter *model.Hunter, material *model.MonsterMaterial) *errors.AppError {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	hunterDao := dto.Hunter{}

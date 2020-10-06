@@ -8,13 +8,13 @@ import (
 	"yu-croco/ddd_on_golang/app/infrastructure/dto"
 )
 
-type MonsterRepositoryImpl struct{}
+type monsterRepositoryImpl struct{}
 
 func NewMonsterRepositoryImpl() repository.MonsterRepository {
-	return &MonsterRepositoryImpl{}
+	return &monsterRepositoryImpl{}
 }
 
-func (repositoryImpl *MonsterRepositoryImpl) FindById(id model.MonsterId) (*model.Monster, *errors.AppError) {
+func (repositoryImpl *monsterRepositoryImpl) FindById(id model.MonsterId) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	monsterDao := dto.Monster{}
@@ -27,7 +27,7 @@ func (repositoryImpl *MonsterRepositoryImpl) FindById(id model.MonsterId) (*mode
 	return monsterDao.ConvertToModel(), nil
 }
 
-func (repositoryImpl *MonsterRepositoryImpl) Update(monster *model.Monster) (*model.Monster, *errors.AppError) {
+func (repositoryImpl *monsterRepositoryImpl) Update(monster *model.Monster) (*model.Monster, *errors.AppError) {
 	db := infrastructure.GetDB()
 	var err errors.AppError
 	monsterDao := dto.Monster{}
