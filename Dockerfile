@@ -1,4 +1,4 @@
-FROM golang:1.15
+FROM golang:1.15 AS build
 
 RUN mkdir /ddd_on_golang
 WORKDIR /ddd_on_golang
@@ -9,6 +9,10 @@ COPY go.sum .
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 go build -o /go/bin/go-app
+RUN CGO_ENABLED=0 go build -o /bin/ddd_on_golang
 
-CMD ["go", "run", "/ddd_on_golang/main.go"]
+FROM scratch
+
+COPY --from=build /bin/ddd_on_golang /bin/ddd_on_golang
+
+CMD ["bin/ddd_on_golang"]
