@@ -2,15 +2,15 @@ package hunter
 
 import (
 	"yu-croco/ddd_on_golang/app/domain/model"
+	"yu-croco/ddd_on_golang/app/domain/repository"
 	"yu-croco/ddd_on_golang/app/domain/service"
 	"yu-croco/ddd_on_golang/app/errors"
-	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
 
-var hunterRepository = repositoryImpl.NewHunterRepositoryImpl()
-var monsterRepository = repositoryImpl.NewMonsterRepositoryImpl()
+func AttackMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId,
+	hunterRepository repository.HunterRepository,
+	monsterRepository repository.MonsterRepository) (*model.Monster, *errors.AppError) {
 
-func AttackMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId) (*model.Monster, *errors.AppError) {
 	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr

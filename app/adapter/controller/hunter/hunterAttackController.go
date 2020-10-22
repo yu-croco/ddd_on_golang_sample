@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
 	"yu-croco/ddd_on_golang/app/domain/model"
+	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 	"yu-croco/ddd_on_golang/app/usecase/hunter"
 )
 
@@ -17,7 +18,10 @@ func (ctrl HunterAttackController) Update(c *gin.Context) {
 	if hunterIdErr.HasErrors() {
 		helpers.Response(c, nil, hunterIdErr)
 	} else {
-		result, errs := hunter.AttackMonsterUseCase(*hunterId, monster.Id)
+		hunterRepository := repositoryImpl.NewHunterRepositoryImpl()
+		monsterRepository := repositoryImpl.NewMonsterRepositoryImpl()
+
+		result, errs := hunter.AttackMonsterUseCase(*hunterId, monster.Id, hunterRepository, monsterRepository)
 		helpers.Response(c, result, errs)
 	}
 }
