@@ -5,7 +5,7 @@ import (
 	"yu-croco/ddd_on_golang/app/adapter/controller/helpers"
 	"yu-croco/ddd_on_golang/app/domain/model"
 	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
-	"yu-croco/ddd_on_golang/app/usecase/hunter"
+	usecase "yu-croco/ddd_on_golang/app/usecase/hunter"
 )
 
 type HunterGetMatrialController struct{}
@@ -21,7 +21,9 @@ func (ctrl HunterGetMatrialController) Update(c *gin.Context) {
 		hunterRepository := repositoryImpl.NewHunterRepositoryImpl()
 		monsterRepository := repositoryImpl.NewMonsterRepositoryImpl()
 
-		result, errs := hunter.GetMaterialFromMonsterUseCase(*hunterId, monster.Id, hunterRepository, monsterRepository)
+		result, errs := usecase.
+			NewGetMaterialFromMonsterUseCaseImpl(*hunterId, monster.Id, hunterRepository, monsterRepository).
+			Exec()
 		helpers.Response(c, result, errs)
 	}
 }

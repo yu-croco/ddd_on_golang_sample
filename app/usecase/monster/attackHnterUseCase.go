@@ -5,21 +5,38 @@ import (
 	"yu-croco/ddd_on_golang/app/domain/repository"
 	"yu-croco/ddd_on_golang/app/domain/service"
 	"yu-croco/ddd_on_golang/app/errors"
-	"yu-croco/ddd_on_golang/app/infrastructure/repositoryImpl"
 )
 
-var hunterRepository = repositoryImpl.NewHunterRepositoryImpl()
-var monsterRepository = repositoryImpl.NewMonsterRepositoryImpl()
+type attackHunterUseCaseImpl struct {
+	HunterId          model.HunterId
+	MonsterId         model.MonsterId
+	HunterRepository  repository.HunterRepository
+	MonsterRepository repository.MonsterRepository
+}
 
-func AttackHunterUseCase(monsterId model.MonsterId, hunterId model.HunterId,
+type attackHunterUseCase interface {
+	Exec() (*model.Hunter, *errors.AppError)
+}
+
+func NewAttackHunterUseCaseImpl(hunterId model.HunterId, monsterId model.MonsterId,
 	hunterRepository repository.HunterRepository,
-	monsterRepository repository.MonsterRepository) (*model.Hunter, *errors.AppError) {
-	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
+	monsterRepository repository.MonsterRepository) attackHunterUseCase {
+
+	return attackHunterUseCaseImpl{
+		HunterId:          hunterId,
+		MonsterId:         monsterId,
+		HunterRepository:  hunterRepository,
+		MonsterRepository: monsterRepository,
+	}
+}
+
+func (impl attackHunterUseCaseImpl) Exec() (*model.Hunter, *errors.AppError) {
+	hunter, hunterFindErr := impl.HunterRepository.FindById(impl.HunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr
 	}
 
-	monster, monsterFindErr := monsterRepository.FindById(monsterId)
+	monster, monsterFindErr := impl.MonsterRepository.FindById(impl.MonsterId)
 	if monsterFindErr.HasErrors() {
 		return nil, monsterFindErr
 	}
@@ -29,7 +46,7 @@ func AttackHunterUseCase(monsterId model.MonsterId, hunterId model.HunterId,
 	if attackErr.HasErrors() {
 		return nil, attackErr
 	}
-	updatedHunter, updateErr := hunterRepository.Update(damagedHunter)
+	updatedHunter, updateErr := impl.HunterRepository.Update(damagedHunter)
 	if updateErr.HasErrors() {
 		return nil, updateErr
 	}

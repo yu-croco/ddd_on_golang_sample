@@ -6,16 +6,36 @@ import (
 	"yu-croco/ddd_on_golang/app/errors"
 )
 
-func GetMaterialFromMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId,
-	hunterRepository repository.HunterRepository,
-	monsterRepository repository.MonsterRepository) (*model.MonsterMaterial, *errors.AppError) {
+type getMaterialFromMonsterUseCaseImpl struct {
+	HunterId          model.HunterId
+	MonsterId         model.MonsterId
+	HunterRepository  repository.HunterRepository
+	MonsterRepository repository.MonsterRepository
+}
+type getMaterialFromMonsterUseCase interface {
+	Exec() (*model.MonsterMaterial, *errors.AppError)
+}
 
-	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
+func NewGetMaterialFromMonsterUseCaseImpl(hunterId model.HunterId, monsterId model.MonsterId,
+	hunterRepository repository.HunterRepository,
+	monsterRepository repository.MonsterRepository) getMaterialFromMonsterUseCase {
+
+	return getMaterialFromMonsterUseCaseImpl{
+		HunterId:          hunterId,
+		MonsterId:         monsterId,
+		HunterRepository:  hunterRepository,
+		MonsterRepository: monsterRepository,
+	}
+}
+
+func (impl getMaterialFromMonsterUseCaseImpl) Exec() (*model.MonsterMaterial, *errors.AppError) {
+
+	hunter, hunterFindErr := impl.HunterRepository.FindById(impl.HunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr
 	}
 
-	monster, monsterFindErr := monsterRepository.FindById(monsterId)
+	monster, monsterFindErr := impl.MonsterRepository.FindById(impl.MonsterId)
 	if monsterFindErr.HasErrors() {
 		return nil, monsterFindErr
 	}
@@ -25,7 +45,7 @@ func GetMaterialFromMonsterUseCase(hunterId model.HunterId, monsterId model.Mons
 		return nil, takeErr
 	}
 
-	hunterRepository.AddMonsterMaterial(hunter, takenMaterial)
+	impl.HunterRepository.AddMonsterMaterial(hunter, takenMaterial)
 
 	return takenMaterial, nil
 }

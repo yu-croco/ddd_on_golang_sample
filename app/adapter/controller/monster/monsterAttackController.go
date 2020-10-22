@@ -20,7 +20,9 @@ func (ctrl MonsterAttackController) Update(c *gin.Context) {
 		hunterRepository := repositoryImpl.NewHunterRepositoryImpl()
 		monsterRepository := repositoryImpl.NewMonsterRepositoryImpl()
 
-		result, errs := usecase.AttackHunterUseCase(*monsterId, hunter.Id, hunterRepository, monsterRepository)
+		result, errs := usecase.
+			NewAttackHunterUseCaseImpl(hunter.Id, *monsterId, hunterRepository, monsterRepository).
+			Exec()
 		helpers.Response(c, result, errs)
 	}
 

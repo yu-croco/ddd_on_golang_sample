@@ -7,16 +7,37 @@ import (
 	"yu-croco/ddd_on_golang/app/errors"
 )
 
-func AttackMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId,
-	hunterRepository repository.HunterRepository,
-	monsterRepository repository.MonsterRepository) (*model.Monster, *errors.AppError) {
+type attackMonsterUseCaseImpl struct {
+	HunterId          model.HunterId
+	MonsterId         model.MonsterId
+	HunterRepository  repository.HunterRepository
+	MonsterRepository repository.MonsterRepository
+}
 
-	hunter, hunterFindErr := hunterRepository.FindById(hunterId)
+type attackMonsterUseCase interface {
+	Exec() (*model.Monster, *errors.AppError)
+}
+
+func NewAttackMonsterUseCaseImpl(hunterId model.HunterId, monsterId model.MonsterId,
+	hunterRepository repository.HunterRepository,
+	monsterRepository repository.MonsterRepository) attackMonsterUseCase {
+
+	return attackMonsterUseCaseImpl{
+		HunterId:          hunterId,
+		MonsterId:         monsterId,
+		HunterRepository:  hunterRepository,
+		MonsterRepository: monsterRepository,
+	}
+}
+
+func (impl attackMonsterUseCaseImpl) Exec() (*model.Monster, *errors.AppError) {
+
+	hunter, hunterFindErr := impl.HunterRepository.FindById(impl.HunterId)
 	if hunterFindErr.HasErrors() {
 		return nil, hunterFindErr
 	}
 
-	monster, monsterFindErr := monsterRepository.FindById(monsterId)
+	monster, monsterFindErr := impl.MonsterRepository.FindById(impl.MonsterId)
 	if monsterFindErr.HasErrors() {
 		return nil, monsterFindErr
 	}
@@ -28,7 +49,7 @@ func AttackMonsterUseCase(hunterId model.HunterId, monsterId model.MonsterId,
 		return nil, attackErr
 	}
 
-	updatedMonster, updateErr := monsterRepository.Update(damagedMonster)
+	updatedMonster, updateErr := impl.MonsterRepository.Update(damagedMonster)
 	if updateErr.HasErrors() {
 		return nil, updateErr
 	}
