@@ -1,3 +1,10 @@
+:warning:
+ディレクトリ構成などはオレオレ流でありGolang Wayには全く則っていません。
+以下などを参考にしてください。
+https://github.com/golang-standards/project-layout
+
+---
+
 # DDD on Golang Sample
 - [yu-croco/ddd_on_scala_sample](https://github.com/yu-croco/ddd_on_scala_sample) のGolangバージョン
 - Golang（Gin）を使い、なんちゃってモンハンの世界をDomain-Driven Designで実装している
