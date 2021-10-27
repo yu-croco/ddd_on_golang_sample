@@ -1,7 +1,7 @@
 :warning:
-ディレクトリ構成などはオレオレ流でありGolang Wayには全く則っていません。
-以下などを参考にしてください。
-https://github.com/golang-standards/project-layout
+
+ディレクトリ構成などはオレオレ流でありGolang Wayには全く則っていません。以下などを参考にしてください。
+- https://github.com/golang-standards/project-layout
 
 ---
 
