@@ -9,7 +9,8 @@ COPY go.sum .
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 go build -o /bin/ddd_on_golang
+RUN cd cmd/ddd_on_golang && \
+    CGO_ENABLED=0 go build -o /bin/ddd_on_golang
 
 FROM scratch
 

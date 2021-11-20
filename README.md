@@ -1,6 +1,8 @@
-:warning:
+:warning: 注意 :warning:
+
 ディレクトリ構成などはオレオレ流でありGolang Wayには全く則っていません。
 以下などを参考にしてください。
+
 https://github.com/golang-standards/project-layout
 
 ---
@@ -33,7 +35,7 @@ https://github.com/golang-standards/project-layout
 同じような構成を2箇所で記述するのでコード量は増えるが、これによってDomain層のロジックが他の層に漏れ出すことを防げる。
 
 ```
-.
+pkg/
 ├── adapter // 外部からのリクエスト処理
 │   └── controller
 ├── domain // ドメイン関連の処理
@@ -64,18 +66,18 @@ https://github.com/golang-standards/project-layout
 
 ### ハンター主体のケース
 - ハンターがモンスターを攻撃する
-    - 確認コマンド: `bin/attackMonster.sh`
+    - 確認コマンド: `make attack_monster`
 
 ![hunter_attacks_monster](./public/images/hunter_attacks_monster.png)
 
 - ハンターが倒したモンスターから素材を剥ぎ取る
-    - 確認コマンド: `bin/getMaterialFromMonster.sh`
+    - 確認コマンド: `make get_material_frommonster`
 
 ![get_material_from_monster](./public/images/get_material_from_monster.png)
 
 ### モンスター主体のケース
 - モンスターがハンターを攻撃する
-    - 確認コマンド: `bin/attackHunter.sh`
+    - 確認コマンド: `make attack_hunter`
 
 ![monster_attacks_hunter](./public/images/monster_attacks_hunter.png)
 
@@ -83,7 +85,7 @@ https://github.com/golang-standards/project-layout
 - このレポジトリをgit cloneする
 - `docker-compose up`でAPIサーバーとDBが起動する
     - seedデータも投入される
-- `bin` 配下にアクセス処理が入っているので、叩いて動作確認ができる
+- Makefileにアクセス処理が入っているので、叩いて動作確認ができる
 
 ## 実装してみての考察
 Golangを用いてDDDをどこまでできたのか（できそうか）をまとめている。
