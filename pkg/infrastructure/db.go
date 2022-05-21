@@ -16,7 +16,7 @@ var (
 
 func Init() *gorm.DB {
 	fmt.Println("waiting to db start up....")
-	time.Sleep(10)
+	time.Sleep(time.Second * 5)
 	config := "host=db port=5432 user=postgres dbname=ddd_on_golang password=ddd_on_golang sslmode=disable"
 	db, err = gorm.Open("postgres", config)
 	if err != nil {
@@ -32,12 +32,6 @@ func Init() *gorm.DB {
 
 func GetDB() *gorm.DB {
 	return db
-}
-
-func Close() {
-	if err := db.Close(); err != nil {
-		fmt.Println("db close error: ", err)
-	}
 }
 
 func autoMigrate() {
